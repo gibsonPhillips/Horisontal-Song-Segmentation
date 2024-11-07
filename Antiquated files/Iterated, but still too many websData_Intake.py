@@ -15,7 +15,7 @@ def T0__parse_algo_beats_txt_to_tuples(url):
 
 
 # type 1 parses the msaf style
-# [timestamps]
+# either [timestamps] or [(timestamp)] haven't figured it out yet
 def T1__parse_algo_beats_txt_to_tuples(url):
     algo_beats = []
     with open(url, "r") as file:
@@ -29,18 +29,17 @@ def T1__parse_algo_beats_txt_to_tuples(url):
 
 # type 2 parses the librosa style
 # (id,start,end,label) with banner
+# no actually (start, end, label)
 def T2__parse_algo_beats_txt_to_tuples(url):
     algo_beats = []
     with open(url, "r") as file:
         for line in file:
-            if (line.strip() == "id,start,end,label"):
-                pass
-            else:
+            parts = line.strip().split()
 
-                parts = line.strip().split(",")
-                start = float(parts[1])
-
-                algo_beats.append(start)
+            start = float(parts[1])
+            end = float(parts[2])
+            label = float(parts[2])
+            algo_beats.append((start, end, label))
 
     return algo_beats
 
