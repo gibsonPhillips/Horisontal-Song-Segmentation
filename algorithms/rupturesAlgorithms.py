@@ -15,7 +15,7 @@ librosa.util.list_examples()
 # %%
 
 
-def runAlgorithm(song_name):
+def runSegmentation(song_name, algorithm, numSegments):
 
     def fig_ax(figsize=(15, 5), dpi=150):
         """Return a (matplotlib) figure and ax objects with given size."""
@@ -81,8 +81,10 @@ def runAlgorithm(song_name):
 
 
     # Choose detection method
-    algo = rpt.KernelCPD(kernel="linear").fit(tempogram.T)
-    # algo = rpt.Window().fit(tempogram.T)
+    if(algorithm == "KernalCPD"):
+        algo = rpt.KernelCPD(kernel="linear").fit(tempogram.T)
+    elif(algorithm == "Window"):
+        algo = rpt.Window().fit(tempogram.T)
 
     # Choose the number of changes (elbow heuristic)
     n_bkps_max = 20  # K_max
@@ -113,8 +115,8 @@ def runAlgorithm(song_name):
     ax.set_xlim(0, n_bkps_max + 1)
 
     # Visually we choose n_bkps=5 (highlighted in red on the elbow plot)
-    n_bkps = 8
-    _ = ax.scatter([8], [get_sum_of_cost(algo=algo, n_bkps=8)], color="r", s=100)
+    n_bkps = numSegments
+    _ = ax.scatter([numSegments], [get_sum_of_cost(algo=algo, n_bkps=numSegments)], color="r", s=100)
 
 
     # Segmentation
@@ -163,6 +165,10 @@ def runAlgorithm(song_name):
             i = i+1
     
 dir_path = "C:\\Users\\sethb\\OneDrive - Worcester Polytechnic Institute (wpi.edu)\\gr-MQP-MLSongMap\\General\\Songs and Annotations\\Songs"
+
 for song in os.scandir(dir_path):
-    runAlgorithm(song.name)
+    runSegmentation(song.name, "KernalCPD", 8)
+
+for song in os.scandir(dir_path):
+    runSegmentation(song.name, "Window", 8)
 # %%

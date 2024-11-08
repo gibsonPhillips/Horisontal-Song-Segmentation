@@ -41,7 +41,7 @@ import os
 #############################
 
 
-def runAlgorithm(song_name):
+def runSegmentation(song_name, algorithm1, algorithm2, numCluster):
     # First, we'll load in a song
     y, sr = librosa.load("C:\\Users\\sethb\\OneDrive - Worcester Polytechnic Institute (wpi.edu)\\gr-MQP-MLSongMap\\General\\Songs and Annotations\\Songs\\" + song_name)
 
@@ -52,49 +52,50 @@ def runAlgorithm(song_name):
     BINS_PER_OCTAVE = 12 * 3
     N_OCTAVES = 7
 
-    # CQT
-    C = librosa.amplitude_to_db(np.abs(librosa.cqt(y=y, sr=sr,
-                                            bins_per_octave=BINS_PER_OCTAVE,
-                                            n_bins=N_OCTAVES * BINS_PER_OCTAVE)),
-                                ref=np.max)
+    if(algorithm1 == "CQT"):
+        # CQT
+        C = librosa.amplitude_to_db(np.abs(librosa.cqt(y=y, sr=sr,
+                                                bins_per_octave=BINS_PER_OCTAVE,
+                                                n_bins=N_OCTAVES * BINS_PER_OCTAVE)),
+                                    ref=np.max)
 
-    # fig, ax = plt.subplots()
-    # librosa.display.specshow(C, y_axis='cqt_hz', sr=sr,
-    #                         bins_per_octave=BINS_PER_OCTAVE,
-    #                         x_axis='time', ax=ax)
+        fig, ax = plt.subplots()
+        librosa.display.specshow(C, y_axis='cqt_hz', sr=sr,
+                                bins_per_octave=BINS_PER_OCTAVE,
+                                x_axis='time', ax=ax)
+        
+    elif(algorithm1 == "STFT"):
+        #STFT
+        # Compute the STFT
+        S = np.abs(librosa.stft(y, n_fft=2048, hop_length=512))
 
-    # #STFT
-    # # Compute the STFT
-    # S = np.abs(librosa.stft(y, n_fft=2048, hop_length=512))
+        # Convert to log-amplitude
+        C = librosa.amplitude_to_db(S, ref=np.max)
 
-    # # Convert to log-amplitude
-    # C = librosa.amplitude_to_db(S, ref=np.max)
+        # Visualize the STFT
+        fig, ax = plt.subplots()
+        librosa.display.specshow(C, y_axis='log', sr=sr, x_axis='time', ax=ax)
 
-    # # Visualize the STFT
-    # fig, ax = plt.subplots()
-    # librosa.display.specshow(C, y_axis='log', sr=sr, x_axis='time', ax=ax)
+    elif(algorithm1 == "Mel"):
+        #Mel
+        # Compute the Mel-spectrogram
+        S = librosa.feature.melspectrogram(y=y, sr=sr, n_fft=2048, hop_length=512, n_mels=128)
 
+        # Convert to log scale (dB)
+        C = librosa.power_to_db(S, ref=np.max)
 
-    # #Mel
-    # # Compute the Mel-spectrogram
-    # S = librosa.feature.melspectrogram(y=y, sr=sr, n_fft=2048, hop_length=512, n_mels=128)
+        # Visualize the Mel-spectrogram
+        fig, ax = plt.subplots()
+        librosa.display.specshow(C, y_axis='mel', sr=sr, x_axis='time', ax=ax)
 
-    # # Convert to log scale (dB)
-    # C = librosa.power_to_db(S, ref=np.max)
+    elif(algorithm1 == "Chroma"):
+        #Chroma
+        # Compute the Chroma feature
+        C = librosa.feature.chroma_stft(y=y, sr=sr, n_fft=2048, hop_length=512)
 
-    # # Visualize the Mel-spectrogram
-    # fig, ax = plt.subplots()
-    # librosa.display.specshow(C, y_axis='mel', sr=sr, x_axis='time', ax=ax)
-
-
-
-    # #Chroma
-    # # Compute the Chroma feature
-    # C = librosa.feature.chroma_stft(y=y, sr=sr, n_fft=2048, hop_length=512)
-
-    # # Visualize the Chroma features
-    # fig, ax = plt.subplots()
-    # librosa.display.specshow(C, y_axis='chroma', x_axis='time', sr=sr, ax=ax)
+        # Visualize the Chroma features
+        fig, ax = plt.subplots()
+        librosa.display.specshow(C, y_axis='chroma', x_axis='time', sr=sr, ax=ax)
 
 
 
@@ -193,7 +194,7 @@ def runAlgorithm(song_name):
     # # If we want k clusters, use the first k normalized eigenvectors.
     # # Fun exercise: see how the segmentation changes as you vary k
 
-    k = 4
+    k = numCluster
 
     X = evecs[:, :k] / Cnorm[:, k-1:k]
 
@@ -215,22 +216,22 @@ def runAlgorithm(song_name):
     #############################################################
     # Let's use these k components to cluster beats into segments
 
-
-    # # KMeans
-    # KM = sklearn.cluster.KMeans(n_clusters=k, n_init="auto")
-    # seg_ids = KM.fit_predict(X)
-
-    # # Spectral
-    # SC = sklearn.cluster.SpectralClustering(n_clusters=k, affinity='precomputed', random_state=0)
-    # seg_ids = SC.fit_predict(A)
-
-    # # GMM
-    # GMM = sklearn.mixture.GaussianMixture(n_components=k, random_state=0)
-    # seg_ids = GMM.fit_predict(X)
-
-    # Agglomerative
-    AC = sklearn.cluster.AgglomerativeClustering(n_clusters=k)
-    seg_ids = AC.fit_predict(X)
+    if(algorithm2 == "KMeans"):
+        # KMeans
+        KM = sklearn.cluster.KMeans(n_clusters=k, n_init="auto")
+        seg_ids = KM.fit_predict(X)
+    elif(algorithm2 == "Spectral"):
+        # Spectral
+        SC = sklearn.cluster.SpectralClustering(n_clusters=k, affinity='precomputed', random_state=0)
+        seg_ids = SC.fit_predict(A)
+    elif(algorithm2 == "GMM"):
+        # GMM
+        GMM = sklearn.mixture.GaussianMixture(n_components=k, random_state=0)
+        seg_ids = GMM.fit_predict(X)
+    elif(algorithm2 == "Agglomerative"):
+        # Agglomerative
+        AC = sklearn.cluster.AgglomerativeClustering(n_clusters=k)
+        seg_ids = AC.fit_predict(X)
 
     # and plot the results
     fig, ax = plt.subplots(ncols=3, sharey=True, figsize=(10, 4))
@@ -335,6 +336,22 @@ def runAlgorithm(song_name):
                 i = i + 1
 
 dir_path = "C:\\Users\\sethb\\OneDrive - Worcester Polytechnic Institute (wpi.edu)\\gr-MQP-MLSongMap\\General\\Songs and Annotations\\Songs"
+
 for song in os.scandir(dir_path):
-    runAlgorithm(song.name)
+    runSegmentation(song.name, "CQT", "KMeans", 4)
+
+# for song in os.scandir(dir_path):
+#     runSegmentation(song.name, "Mel", "KMeans", 4)
+
+# for song in os.scandir(dir_path):
+#     runSegmentation(song.name, "STFT", "KMeans", 4)
+
+# for song in os.scandir(dir_path):
+#     runSegmentation(song.name, "CQT", "Agglomerative", 4)
+
+# for song in os.scandir(dir_path):
+#     runSegmentation(song.name, "CQT", "GMM", 4)
+
+# for song in os.scandir(dir_path):
+#     runSegmentation(song.name, "CQT", "Spectral", 4)
     # %%
