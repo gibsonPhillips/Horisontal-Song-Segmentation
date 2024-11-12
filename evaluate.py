@@ -7,7 +7,7 @@ from Annotated_Intake import *
 from Data_Intake import *
 
 ### config data
-Acceptable_threshold = 3
+ACCEPTABLE_THRESHOLD = 3
 
 
 
@@ -83,6 +83,23 @@ def AbVa(list):
     AbVa_list = [abs(i) for i in list]
     return AbVa_list
 
+def boundariesGroundTruth(distToGTBounds, totalBounds):
+    gtBoundsNum = 0
+    for distGTBound in distToGTBounds:
+        if abs(distGTBound) < ACCEPTABLE_THRESHOLD:
+            gtBoundsNum += 1
+    return gtBoundsNum/totalBounds
+
+def groundTruthBoundariesFound(distToGTBounds, nearestGTBounds, gtBounds):
+    gtBoundsFound = set()
+    for i in range(len(nearestGTBounds)):
+        gtBound = nearestGTBounds[i]
+        distGTBound = distToGTBounds[i]
+        if abs(distGTBound) < ACCEPTABLE_THRESHOLD and gtBound not in gtBoundsFound:
+            gtBoundsFound.add(gtBound)
+    return len(gtBoundsFound)/len(gtBounds)
+
+
 
 
 def make_csv_tuple(boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
@@ -90,29 +107,34 @@ def make_csv_tuple(boundaries, nearest_beats, nearest_beats_distance, nearest_se
 
     csv_tuples = []
 
-    # 0th indexed id numbers
-    i = 0
-    for boundary, nearest_beat, nearest_beat_distance, nearest_segment, nearest_segment_distance in zip(
-            boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
+    # 1th indexed id numbers
+    i = 1
+    for boundary, nearest_beat, nearest_beat_distance, nearest_segment, nearest_segment_distance in zip(boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
 
-
-        csv_tuples.append((
-            i,  # Segment index
-            boundary,
-            nearest_beat[1], # timestamp of nearest beat
-            nearest_beat_distance[0], # distance from beat
-            nearest_beat[2], # timestamp of nearest downbeat
-            nearest_beat_distance[1], # distance from downbeat
-            nearest_segment[1],
-            nearest_segment_distance
-        ))
+        if(i != 1):
+            csv_tuples.append((
+                i,  # Segment index
+                boundary,
+                nearest_beat[1], # timestamp of nearest beat
+                '',
+                nearest_beat_distance[0], # distance from beat
+                nearest_beat[2], # timestamp of nearest downbeat
+                nearest_beat_distance[1], # distance from downbeat
+                nearest_segment[1],
+                nearest_segment_distance
+            ))
+        else:
+            csv_tuples.append((i,boundary,'NA','NA','NA','NA','NA','NA','NA'))
         i += 1
 
+    tuple = csv_tuples[i-2]
+    csv_tuples.pop(i-2)
+    csv_tuples.append((tuple[0], tuple[1],'NA','NA','NA','NA','NA','NA','NA'))
     return csv_tuples
 
 
 # write distances to a CSV file
-def write_csv(boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, averages):
+def write_csv(anno_segments, boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
     data = make_csv_tuple(boundaries,
                           nearest_beats,
                           nearest_beats_distance,
@@ -124,15 +146,17 @@ def write_csv(boundaries, nearest_beats, nearest_beats_distance, nearest_segment
 
         # !!! update headers
         # headers
-        csv_writer.writerow(['Segment', 'Start_Time', 'Nearest_Beat', 'Dist_to_Nearest_Beat',
+        csv_writer.writerow(['Boundary', 'Start_Time', 'Nearest_Beat', 'Nearest_Beat_Number', 'Dist_to_Nearest_Beat',
                              'Nearest_Downbeat', 'Dist_to_Nearest_Downbeat', "Nearest_GT_Segment", "Dist_to_Nearest_GT_Segment"])
 
         for tuple in data:
             csv_writer.writerow(tuple)
 
 # anal headers
-        csv_writer.writerow(["Beat_Distances_Ave", "Downbeat_Distances_Ave", "Segment_Distances_Ave"])
-        csv_writer.writerow(averages)
+        csv_writer.writerow(["Averages", "", "", "", averager(AbVa([i[0] for i in nearest_beats_distance])), "", averager(AbVa([i[1] for i in nearest_beats_distance])), "", averager(AbVa(nearest_segments_distance))])
+        csv_writer.writerow(["Proximity Scores", "", "", ""])
+        csv_writer.writerow(["Percent of ground truth boundaries", boundariesGroundTruth(nearest_segments_distance, len(data))])
+        csv_writer.writerow(["Percent of ground truth boundaries found", groundTruthBoundariesFound(nearest_segments_distance, nearest_segments, anno_segments)])
     return
 
 
@@ -155,21 +179,7 @@ nearest_segments, nearest_segments_distance = nearest_segment_finder(algo_segmen
 
 # raw = [algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance]
 
-# averages for ((beats, downbeats, segments))
-averages = (averager([i[0] for i in nearest_beats_distance]),
-            averager(AbVa([i[0] for i in nearest_beats_distance])),
-
-            averager([i[1] for i in nearest_beats_distance]),
-            averager(AbVa([i[1] for i in nearest_beats_distance])),
-
-# above parts need to be placed into lists as we're stripping the values from list of tuples
-# lower part is already lists, so no list comprehension required.
-
-            averager(nearest_segments_distance),
-            averager(AbVa(nearest_segments_distance)))
-
-
-write_csv(algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, averages)
+write_csv(anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance)
 
 
 
