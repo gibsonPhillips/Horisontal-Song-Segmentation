@@ -163,10 +163,10 @@ def write_csv(csv_name, song_name, anno_beats, anno_segments, boundaries, neares
 
 
 # def main():
-anno_beats_txt = "Baseline/Beats_Downbeats/0094_fireflies.txt"
+anno_beats_txt = "ground_truth/Beats_Downbeats/0094_fireflies.txt"
 anno_beats = beat_intake(anno_beats_txt)
 
-anno_segments_txt = "Baseline/Segments/0094_fireflies.txt"
+anno_segments_txt = "ground_truth/Segments/0094_fireflies.txt"
 anno_segments = segment_intake(anno_segments_txt)
 
 for folder in os.scandir("outputs"):
