@@ -24,18 +24,20 @@ noID_segment_boundaries = [
 # outputs tuples as timestamps (boundary, nearest beat, nearest downbeat), distance(seconds)
 def nearest_beat_finder(algo_boundary, anno_beats):
     nearest_beats = []
-
+    
     beat_times = [beat[0] for beat in anno_beats]
+    beat_nums = [beat[1] for beat in anno_beats]
     downbeat_times = [beat[0] for beat in anno_beats if beat[1] == 1]
 
     for boundary in algo_boundary:
 
         # I know
         # innifficiantly checked every timestamp every time
-        nearest_beat = (min(beat_times, key=lambda x: abs(x - boundary)))
+        index, nearest_beat = min(enumerate(beat_times), key=lambda x: abs(x[1] - boundary))
+        nearest_beat_num = beat_nums[index]
         nearest_downbeat = (min(downbeat_times, key=lambda x: abs(x-boundary)))
 
-        nearest_beats.append((boundary, nearest_beat, nearest_downbeat))
+        nearest_beats.append((boundary, nearest_beat, nearest_downbeat, nearest_beat_num))
     beat_distance = beat_distances(nearest_beats)
     return nearest_beats, beat_distance
 
@@ -75,7 +77,10 @@ def segment_distance(nearest_segments):
 
 # takes list of values and returns average of values
 def averager(data):
-    return statistics.mean(data)
+    if len(data) > 2:
+        return sum(data[1:-1]) / len(data[1:-1])
+    else:
+        return None
 
 
 # takes list of values and returns list of absolute values?
@@ -116,7 +121,7 @@ def make_csv_tuple(boundaries, nearest_beats, nearest_beats_distance, nearest_se
                 i,  # Segment index
                 boundary,
                 nearest_beat[1], # timestamp of nearest beat
-                '',
+                nearest_beat[3],
                 nearest_beat_distance[0], # distance from beat
                 nearest_beat[2], # timestamp of nearest downbeat
                 nearest_beat_distance[1], # distance from downbeat
@@ -134,12 +139,14 @@ def make_csv_tuple(boundaries, nearest_beats, nearest_beats_distance, nearest_se
 
 
 # write distances to a CSV file
-def write_csv(anno_segments, boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
+def write_csv(anno_beats, anno_segments, boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
     data = make_csv_tuple(boundaries,
                           nearest_beats,
                           nearest_beats_distance,
                           nearest_segments,
                           nearest_segments_distance)
+    
+    averageTimeBetweenBeats = float(anno_beats[1][0]) - float(anno_beats[0][0])
 
     with open('segment_boundary_distances.csv', mode='w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
@@ -154,9 +161,10 @@ def write_csv(anno_segments, boundaries, nearest_beats, nearest_beats_distance, 
 
 # anal headers
         csv_writer.writerow(["Averages", "", "", "", averager(AbVa([i[0] for i in nearest_beats_distance])), "", averager(AbVa([i[1] for i in nearest_beats_distance])), "", averager(AbVa(nearest_segments_distance))])
-        csv_writer.writerow(["Proximity Scores", "", "", ""])
+        csv_writer.writerow(["Proximity Scores", "", "", "", averager(AbVa([i[0] for i in nearest_beats_distance])) / averageTimeBetweenBeats, "", averager(AbVa([i[1] for i in nearest_beats_distance])) / averageTimeBetweenBeats, "", averager(AbVa(nearest_segments_distance)) / averageTimeBetweenBeats])
         csv_writer.writerow(["Percent of ground truth boundaries", boundariesGroundTruth(nearest_segments_distance, len(data))])
         csv_writer.writerow(["Percent of ground truth boundaries found", groundTruthBoundariesFound(nearest_segments_distance, nearest_segments, anno_segments)])
+        csv_writer.writerow(["Average time between beats", averageTimeBetweenBeats])
     return
 
 
@@ -169,7 +177,7 @@ anno_beats = beat_intake(anno_beats_txt)
 anno_segments_txt = "Baseline/Segments/0094_fireflies.txt"
 anno_segments = segment_intake(anno_segments_txt)
 
-algo_segments_txt = "outputs/Librosa Kmeans CQT Cluster 4/0094Owl City  Fireflies Official Music Video Output.csv"
+algo_segments_txt = "outputs/Librosa_KmeansCQT_Cluster4/Fireflies_Librosa_KMeansCQT_Cluster4.csv"
 algo_segments = T2__parse_algo_beats_txt_to_tuples(algo_segments_txt)
 
 ## ((boundary, nearest beat timestamp, nearest downbeat timestamp)), ((boundary - nearest_beat, boundary - nearest_downbeat))
@@ -179,7 +187,7 @@ nearest_segments, nearest_segments_distance = nearest_segment_finder(algo_segmen
 
 # raw = [algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance]
 
-write_csv(anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance)
+write_csv(anno_beats, anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance)
 
 
 
