@@ -169,6 +169,11 @@ anno_beats = beat_intake(anno_beats_txt)
 anno_segments_txt = "ground_truth/Segments/0094_fireflies.txt"
 anno_segments = segment_intake(anno_segments_txt)
 
+try:
+    os.mkdir('algorithm_evaluations')
+except FileExistsError:
+    print('algorithm_evaluations exists')
+
 for folder in os.scandir("outputs"):
     print(folder.name)
     csv_path = "algorithm_evaluations/" + folder.name + ".csv"
