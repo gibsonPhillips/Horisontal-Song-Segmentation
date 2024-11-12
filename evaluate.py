@@ -171,15 +171,15 @@ anno_segments = segment_intake(anno_segments_txt)
 
 for folder in os.scandir("outputs"):
     print(folder.name)
-    csv_name = folder.name + ".csv"
-    with open(csv_name, mode='w', newline='') as csv_file:
+    csv_path = "algorithm_evaluations/" + folder.name + ".csv"
+    with open(csv_path, mode='w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow([folder.name])
     for song in os.scandir(folder.path):
         algo_segments = T2__parse_algo_beats_txt_to_tuples(song.path)
         nearest_beats, nearest_beats_distance = nearest_beat_finder(algo_segments, anno_beats)
         nearest_segments, nearest_segments_distance = nearest_segment_finder(algo_segments, anno_segments)
-        write_csv(csv_name, song.name, anno_beats, anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance)
+        write_csv(csv_path, song.name, anno_beats, anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance)
 
 
 
