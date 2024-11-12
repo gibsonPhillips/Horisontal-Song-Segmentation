@@ -3,8 +3,8 @@ import os
 
 # import numpy as np
 
-from Annotated_Intake import *
-from Data_Intake import *
+from annotated_intake import *
+from data_intake import *
 
 ### config data
 ACCEPTABLE_THRESHOLD_1 = 0.5
