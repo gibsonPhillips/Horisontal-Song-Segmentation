@@ -191,7 +191,7 @@ for folder in os.scandir("outputs"):
         write_csv(csv_path, song.name, anno_beats, anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, rand_index_score)
 
     rand_index_average = float(rand_index_sum) + float(song_count)
-    with open(csv_path, mode='w', newline='') as csv_file:
+    with open(csv_path, mode='a', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(['Average Rand Index Score', rand_index_average])
 
