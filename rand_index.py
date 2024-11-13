@@ -39,6 +39,7 @@ def calculate_rand_index(gt_filepath, pd_filepath):
             if i < j:
                 if prediction_check(predictions, i, j) == ground_truth_check(ground_truth, i, j):
                     agreement += 1
+                    #print(str(i) + " " + str(j)) # for testing
                 count += 1
     return float(agreement)/float(count)
 
@@ -53,11 +54,12 @@ def prediction_check(predictions, i, j):
         else:
             lower = float(row[1])
             upper = float(row[2])
-            if lower < i < upper:
+            if lower <= i < upper:
                 i_segment = row[3]
-            if lower < j < upper:
+            if lower <= j < upper:
                 j_segment = row[3]
     if i_segment == j_segment:
+        #print(str(i) + ' ' + str(j))  # for testing
         return 1
     else:
         return 0
@@ -73,18 +75,18 @@ def ground_truth_check(ground_truth, i, j):
         else:
             lower = float(last_row[0])
             upper = float(row[0])
-            if lower < i < upper:
+            if lower <= i < upper:
                 i_segment = last_row[1]
-            if lower < j < upper:
+            if lower <= j < upper:
                 j_segment = last_row[1]
         last_row = row
     if i_segment == j_segment:
+        #print(str(i) + ' ' + str(j)) # for testing
         return 1
     else:
         return 0
 
 
 test_score = calculate_rand_index('ground_truth/Segments/Bulletproof_Segments.txt', 'outputs/Baseline_Even/Bulletproof_Baseline_Even.csv')
-print(test_score)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
