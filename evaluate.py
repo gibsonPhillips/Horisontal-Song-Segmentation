@@ -43,9 +43,7 @@ def beat_distances(nearest_beats):
 # anno_segments is
 def nearest_segment_finder(algo_segments, anno_segments):
     nearest_segments = []
-
-
-
+    
     for boundary in algo_segments:
 
         # I know
@@ -71,30 +69,26 @@ def averager(data):
     else:
         return None
 
-
 # takes list of values and returns list of absolute values?
 def AbVa(list):
     AbVa_list = [abs(i) for i in list]
     return AbVa_list
 
-def boundariesGroundTruth(distToGTBounds, totalBounds):
+def boundariesGroundTruth(distToGTBounds, totalBounds, threshold):
     gtBoundsNum = 0
     for distGTBound in distToGTBounds:
-        if abs(distGTBound) < ACCEPTABLE_THRESHOLD_2:
+        if abs(distGTBound) < threshold:
             gtBoundsNum += 1
     return gtBoundsNum/totalBounds
 
-def groundTruthBoundariesFound(distToGTBounds, nearestGTBounds, gtBounds):
+def groundTruthBoundariesFound(distToGTBounds, nearestGTBounds, gtBounds, threshold):
     gtBoundsFound = set()
     for i in range(len(nearestGTBounds)):
         gtBound = nearestGTBounds[i]
         distGTBound = distToGTBounds[i]
-        if abs(distGTBound) < ACCEPTABLE_THRESHOLD_2 and gtBound not in gtBoundsFound:
+        if abs(distGTBound) < threshold and gtBound not in gtBoundsFound:
             gtBoundsFound.add(gtBound)
     return len(gtBoundsFound)/len(gtBounds)
-
-
-
 
 def make_csv_tuple(boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
     # boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance = raw_data
@@ -154,8 +148,10 @@ def write_csv(csv_name, song_name, anno_beats, anno_segments, boundaries, neares
 # anal headers
         csv_writer.writerow(["Averages", "", "", "", averager(AbVa([i[0] for i in nearest_beats_distance])), "", averager(AbVa([i[1] for i in nearest_beats_distance])), "", averager(AbVa(nearest_segments_distance))])
         csv_writer.writerow(["Proximity Scores", "", "", "", averager(AbVa([i[0] for i in nearest_beats_distance])) / averageTimeBetweenBeats, "", averager(AbVa([i[1] for i in nearest_beats_distance])) / averageTimeBetweenBeats, "", averager(AbVa(nearest_segments_distance)) / averageTimeBetweenBeats])
-        csv_writer.writerow(["Percent of ground truth boundaries", boundariesGroundTruth(nearest_segments_distance, len(data))])
-        csv_writer.writerow(["Percent of ground truth boundaries found", groundTruthBoundariesFound(nearest_segments_distance, nearest_segments, anno_segments)])
+        csv_writer.writerow(["Percent of ground truth boundaries (0.5 sec)", boundariesGroundTruth(nearest_segments_distance, len(data), ACCEPTABLE_THRESHOLD_1)])
+        csv_writer.writerow(["Percent of ground truth boundaries found (0.5 sec)", groundTruthBoundariesFound(nearest_segments_distance, nearest_segments, anno_segments, ACCEPTABLE_THRESHOLD_1)])
+        csv_writer.writerow(["Percent of ground truth boundaries (3 sec)", boundariesGroundTruth(nearest_segments_distance, len(data), ACCEPTABLE_THRESHOLD_2)])
+        csv_writer.writerow(["Percent of ground truth boundaries found (3 sec)", groundTruthBoundariesFound(nearest_segments_distance, nearest_segments, anno_segments, ACCEPTABLE_THRESHOLD_2)])
         csv_writer.writerow(["Average time between beats", averageTimeBetweenBeats])
     return
 
