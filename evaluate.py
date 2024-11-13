@@ -163,11 +163,11 @@ def write_csv(csv_name, song_name, anno_beats, anno_segments, boundaries, neares
 
 
 # def main():
-anno_beats_txt = "ground_truth/Beats_Downbeats/0094_fireflies.txt"
-anno_beats = beat_intake(anno_beats_txt)
+# anno_beats_txt = "ground_truth/Beats_Downbeats/Fireflies_Beats.txt"
+# anno_beats = beat_intake(anno_beats_txt)
 
-anno_segments_txt = "ground_truth/Segments/0094_fireflies.txt"
-anno_segments = segment_intake(anno_segments_txt)
+# anno_segments_txt = "ground_truth/Segments/Fireflies_Segments.txt"
+# anno_segments = segment_intake(anno_segments_txt)
 
 try:
     os.mkdir('algorithm_evaluations')
@@ -175,12 +175,14 @@ except FileExistsError:
     print('algorithm_evaluations exists')
 
 for folder in os.scandir("outputs"):
-    print(folder.name)
     csv_path = "algorithm_evaluations/" + folder.name + ".csv"
     with open(csv_path, mode='w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow([folder.name])
     for song in os.scandir(folder.path):
+        songNameSubstring = song.name.split("_")[0]
+        anno_beats = beat_intake("ground_truth/Beats_Downbeats/" + songNameSubstring + "_Beats.txt")
+        anno_segments = segment_intake("ground_truth/Segments/" + songNameSubstring + "_Segments.txt")
         algo_segments = T2__parse_algo_beats_txt_to_tuples(song.path)
         nearest_beats, nearest_beats_distance = nearest_beat_finder(algo_segments, anno_beats)
         nearest_segments, nearest_segments_distance = nearest_segment_finder(algo_segments, anno_segments)
