@@ -160,15 +160,6 @@ def write_csv(csv_name, song_name, anno_beats, anno_segments, boundaries, neares
     return
 
 
-
-
-# def main():
-# anno_beats_txt = "ground_truth/Beats_Downbeats/Fireflies_Beats.txt"
-# anno_beats = beat_intake(anno_beats_txt)
-
-# anno_segments_txt = "ground_truth/Segments/Fireflies_Segments.txt"
-# anno_segments = segment_intake(anno_segments_txt)
-
 try:
     os.mkdir('algorithm_evaluations')
 except FileExistsError:
