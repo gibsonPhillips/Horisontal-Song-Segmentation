@@ -5,6 +5,7 @@ import os
 
 from annotated_intake import *
 from data_intake import *
+from rand_index import calculate_rand_index
 
 ### config data
 ACCEPTABLE_THRESHOLD_1 = 0.5
@@ -122,7 +123,7 @@ def make_csv_tuple(boundaries, nearest_beats, nearest_beats_distance, nearest_se
 
 
 # write distances to a CSV file
-def write_csv(csv_name, song_name, anno_beats, anno_segments, boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
+def write_csv(csv_name, song_name, anno_beats, anno_segments, boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, rand_index_score):
     data = make_csv_tuple(boundaries,
                           nearest_beats,
                           nearest_beats_distance,
@@ -153,6 +154,7 @@ def write_csv(csv_name, song_name, anno_beats, anno_segments, boundaries, neares
         csv_writer.writerow(["Percent of ground truth boundaries (3 sec)", boundariesGroundTruth(nearest_segments_distance, len(data), ACCEPTABLE_THRESHOLD_2)])
         csv_writer.writerow(["Percent of ground truth boundaries found (3 sec)", groundTruthBoundariesFound(nearest_segments_distance, nearest_segments, anno_segments, ACCEPTABLE_THRESHOLD_2)])
         csv_writer.writerow(["Average time between beats", averageTimeBetweenBeats])
+        csv_writer.writerow(["Rand Index Score", rand_index_score])
     return
 
 
@@ -163,18 +165,35 @@ except FileExistsError:
 
 for folder in os.scandir("outputs"):
     csv_path = "algorithm_evaluations/" + folder.name + ".csv"
+
+    song_count = 0
+    rand_index_sum = 0
     with open(csv_path, mode='w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow([folder.name])
     for song in os.scandir(folder.path):
         songNameSubstring = song.name.split("_")[0]
-        anno_beats = beat_intake("ground_truth/Beats_Downbeats/" + songNameSubstring + "_Beats.txt")
-        anno_segments = segment_intake("ground_truth/Segments/" + songNameSubstring + "_Segments.txt")
+
+        anno_beats_path = "ground_truth/Beats_Downbeats/" + songNameSubstring + "_Beats.txt"
+        anno_segments_path = "ground_truth/Segments/" + songNameSubstring + "_Segments.txt"
+        anno_beats = beat_intake(anno_beats_path)
+        anno_segments = segment_intake(anno_segments_path)
+
         algo_segments = T2__parse_algo_beats_txt_to_tuples(song.path)
         nearest_beats, nearest_beats_distance = nearest_beat_finder(algo_segments, anno_beats)
         nearest_segments, nearest_segments_distance = nearest_segment_finder(algo_segments, anno_segments)
-        write_csv(csv_path, song.name, anno_beats, anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance)
 
+        #rand_index
+        rand_index_score = calculate_rand_index(anno_segments_path, song.path)
+        song_count += 1
+        rand_index_sum += rand_index_score
+
+        write_csv(csv_path, song.name, anno_beats, anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, rand_index_score)
+
+    rand_index_average = float(rand_index_sum) + float(song_count)
+    with open(csv_path, mode='w', newline='') as csv_file:
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(['Average Rand Index Score', rand_index_average])
 
 
 
