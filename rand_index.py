@@ -87,6 +87,6 @@ def ground_truth_check(ground_truth, i, j):
         return 0
 
 
-test_score = calculate_rand_index('ground_truth/Segments/Bulletproof_Segments.txt', 'outputs/Baseline_Even/Bulletproof_Baseline_Even.csv')
+test_score = calculate_rand_index('ground_truth/Segments/Fireflies_Segments.txt', 'outputs/Baseline_Even/Fireflies_Baseline_Even.csv')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
