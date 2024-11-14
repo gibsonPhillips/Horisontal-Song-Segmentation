@@ -39,23 +39,6 @@ def runSegmentation(song_name, algorithm, numSegments):
     _ = ax.set(title="Sound envelope")
 
 
-
-    duration = 300  # in seconds
-    filename = "C:\\Users\\sethb\\OneDrive - Worcester Polytechnic Institute (wpi.edu)\\gr-MQP-MLSongMap\\General\\Songs and Annotations\\Songs\\0094Owl City  Fireflies Official Music Video.wav"
-    #filename = librosa.ex("brahms")
-    signal, sampling_rate = librosa.load(filename, duration=duration)
-
-    # listen to the music
-    display(Audio(data=signal, rate=sampling_rate))
-
-    # look at the envelope
-    fig, ax = fig_ax()
-    ax.plot(np.arange(signal.size) / sampling_rate, signal)
-    ax.set_xlim(0, signal.size / sampling_rate)
-    ax.set_xlabel("Time (s)")
-    _ = ax.set(title="Sound envelope")
-
-
     # Compute the onset strength
     hop_length_tempo = 256
     oenv = librosa.onset.onset_strength(
@@ -166,9 +149,9 @@ def runSegmentation(song_name, algorithm, numSegments):
     
 dir_path = "C:\\Users\\sethb\\OneDrive - Worcester Polytechnic Institute (wpi.edu)\\gr-MQP-MLSongMap\\General\\Songs and Annotations\\Songs"
 
-for song in os.scandir(dir_path):
-    runSegmentation(song.name, "KernalCPD", 8)
+# for song in os.scandir(dir_path):
+#     runSegmentation(song.name, "KernalCPD", 5)
 
 for song in os.scandir(dir_path):
-    runSegmentation(song.name, "Window", 8)
+    runSegmentation(song.name, "Window", 5)
 # %%
