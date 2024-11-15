@@ -91,19 +91,20 @@ def groundTruthBoundariesFound(distToGTBounds, nearestGTBounds, gtBounds, thresh
             gtBoundsFound.add(gtBound)
     return len(gtBoundsFound)/len(gtBounds)
 
-def make_csv_tuple(boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
-    # boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance = raw_data
+def make_csv_tuple(boundaries, labels, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
+    # boundaries, label, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance = raw_data
 
     csv_tuples = []
 
     # 1th indexed id numbers
     i = 1
-    for boundary, nearest_beat, nearest_beat_distance, nearest_segment, nearest_segment_distance in zip(boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
+    for boundary, label, nearest_beat, nearest_beat_distance, nearest_segment, nearest_segment_distance in zip(boundaries, labels, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance):
 
         if(i != 1):
             csv_tuples.append((
                 i,  # Segment index
                 boundary,
+                label,
                 nearest_beat[1], # timestamp of nearest beat
                 nearest_beat[3],
                 nearest_beat_distance[0], # distance from beat
@@ -113,18 +114,19 @@ def make_csv_tuple(boundaries, nearest_beats, nearest_beats_distance, nearest_se
                 nearest_segment_distance
             ))
         else:
-            csv_tuples.append((i,boundary,'NA','NA','NA','NA','NA','NA','NA'))
+            csv_tuples.append((i,boundary,label,'NA','NA','NA','NA','NA','NA','NA'))
         i += 1
 
     tuple = csv_tuples[i-2]
     csv_tuples.pop(i-2)
-    csv_tuples.append((tuple[0], tuple[1],'NA','NA','NA','NA','NA','NA','NA'))
+    csv_tuples.append((tuple[0], tuple[1], tuple[2],'NA','NA','NA','NA','NA','NA','NA'))
     return csv_tuples
 
 
 # write distances to a CSV file
-def write_csv(csv_name, song_name, anno_beats, anno_segments, boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, rand_index_score):
+def write_csv(csv_name, song_name, labels, anno_beats, anno_segments, boundaries, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, rand_index_score):
     data = make_csv_tuple(boundaries,
+                          labels,
                           nearest_beats,
                           nearest_beats_distance,
                           nearest_segments,
@@ -140,7 +142,7 @@ def write_csv(csv_name, song_name, anno_beats, anno_segments, boundaries, neares
 
         # !!! update headers
         # headers
-        csv_writer.writerow(['Boundary', 'Start_Time', 'Nearest_Beat', 'Nearest_Beat_Number', 'Dist_to_Nearest_Beat',
+        csv_writer.writerow(['Boundary', 'Boundary_Timestamp', "Label", 'Nearest_Beat', 'Nearest_Beat_Number', 'Dist_to_Nearest_Beat',
                              'Nearest_Downbeat', 'Dist_to_Nearest_Downbeat', "Nearest_GT_Segment", "Dist_to_Nearest_GT_Segment"])
 
         for tuple in data:
@@ -157,6 +159,8 @@ def write_csv(csv_name, song_name, anno_beats, anno_segments, boundaries, neares
         gt_boundaries_found_1 = groundTruthBoundariesFound(nearest_segments_distance, nearest_segments, anno_segments, ACCEPTABLE_THRESHOLD_1)
         gt_boundaries_2 = boundariesGroundTruth(nearest_segments_distance, len(data), ACCEPTABLE_THRESHOLD_2)
         gt_boundaries_found_2 = groundTruthBoundariesFound(nearest_segments_distance, nearest_segments, anno_segments, ACCEPTABLE_THRESHOLD_2)
+        gt_boundaries_3 = boundariesGroundTruth(nearest_segments_distance, len(data), averageTimeBetweenBeats*2)
+        gt_boundaries_found_3 = groundTruthBoundariesFound(nearest_segments_distance, nearest_segments, anno_segments, averageTimeBetweenBeats*2)
 
 
 # anal headers
@@ -166,9 +170,11 @@ def write_csv(csv_name, song_name, anno_beats, anno_segments, boundaries, neares
         csv_writer.writerow(["Percent of ground truth boundaries found (0.5 sec)", gt_boundaries_found_1])
         csv_writer.writerow(["Percent of ground truth boundaries (3 sec)", gt_boundaries_2])
         csv_writer.writerow(["Percent of ground truth boundaries found (3 sec)", gt_boundaries_found_2])
+        csv_writer.writerow(["Percent of ground truth boundaries (2 beats)", gt_boundaries_3])
+        csv_writer.writerow(["Percent of ground truth boundaries found (2 beats)", gt_boundaries_found_3])
         csv_writer.writerow(["Average time between beats", averageTimeBetweenBeats])
         csv_writer.writerow(["Rand Index Score", rand_index_score])
-    return nearest_any_beat, nearest_downbeats, nearest_gt_segments, nearest_any_beat_ps, nearest_downbeats_ps, nearest_gt_segments_ps, gt_boundaries_1, gt_boundaries_found_1, gt_boundaries_2, gt_boundaries_found_2
+    return nearest_any_beat, nearest_downbeats, nearest_gt_segments, nearest_any_beat_ps, nearest_downbeats_ps, nearest_gt_segments_ps, gt_boundaries_1, gt_boundaries_found_1, gt_boundaries_2, gt_boundaries_found_2, gt_boundaries_3, gt_boundaries_found_3
 
 
 try:
@@ -198,6 +204,8 @@ for folder in os.scandir("outputs"):
     gt_boundaries_found_1_sum = 0
     gt_boundaries_2_sum = 0
     gt_boundaries_found_2_sum = 0
+    gt_boundaries_3_sum = 0
+    gt_boundaries_found_3_sum = 0
 
 
     with open(csv_path, mode='w', newline='') as csv_file:
@@ -211,7 +219,7 @@ for folder in os.scandir("outputs"):
         anno_beats = beat_intake(anno_beats_path)
         anno_segments = segment_intake(anno_segments_path)
 
-        algo_segments = T2__parse_algo_beats_txt_to_tuples(song.path)
+        algo_segments, labels = T2__parse_algo_beats_txt_to_tuples(song.path)
         nearest_beats, nearest_beats_distance = nearest_beat_finder(algo_segments, anno_beats)
         nearest_segments, nearest_segments_distance = nearest_segment_finder(algo_segments, anno_segments)
 
@@ -220,7 +228,7 @@ for folder in os.scandir("outputs"):
         song_count += 1
         rand_index_sum += rand_index_score
 
-        nearest_any_beat, nearest_downbeats, nearest_gt_segments, nearest_any_beat_ps, nearest_downbeats_ps, nearest_gt_segments_ps, gt_boundaries_1, gt_boundaries_found_1, gt_boundaries_2, gt_boundaries_found_2 = write_csv(csv_path, song.name, anno_beats, anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, rand_index_score)
+        nearest_any_beat, nearest_downbeats, nearest_gt_segments, nearest_any_beat_ps, nearest_downbeats_ps, nearest_gt_segments_ps, gt_boundaries_1, gt_boundaries_found_1, gt_boundaries_2, gt_boundaries_found_2, gt_boundaries_3, gt_boundaries_found_3 = write_csv(csv_path, song.name, labels, anno_beats, anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, rand_index_score)
         
         nearest_any_beat_sum += nearest_any_beat
         nearest_downbeats_sum += nearest_downbeats
@@ -229,9 +237,11 @@ for folder in os.scandir("outputs"):
         nearest_downbeats_ps_sum += nearest_downbeats_ps
         nearest_gt_segments_ps_sum += nearest_gt_segments_ps
         gt_boundaries_1_sum += gt_boundaries_1
-        gt_boundaries_found_1_sum += gt_boundaries_1_sum
+        gt_boundaries_found_1_sum += gt_boundaries_found_1
         gt_boundaries_2_sum += gt_boundaries_2
         gt_boundaries_found_2_sum += gt_boundaries_found_2
+        gt_boundaries_3_sum += gt_boundaries_3
+        gt_boundaries_found_3_sum += gt_boundaries_found_3
 
     with open(csv_path, mode='a', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
@@ -247,6 +257,8 @@ for folder in os.scandir("outputs"):
         csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (0.5)', float(gt_boundaries_found_1_sum) / float(song_count)])
         csv_writer.writerow(['Average Percent of Ground Truth Boundaries (3)', float(gt_boundaries_2_sum) / float(song_count)])
         csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (3)', float(gt_boundaries_found_2_sum) / float(song_count)])
+        csv_writer.writerow(['Average Percent of Ground Truth Boundaries (2 beats)', float(gt_boundaries_3_sum) / float(song_count)])
+        csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (2 beats)', float(gt_boundaries_found_3_sum) / float(song_count)])
 
         csv_writer.writerow(['Average Rand Index Score', float(rand_index_sum) / float(song_count)])
 
@@ -266,6 +278,8 @@ for folder in os.scandir("outputs"):
         csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (0.5)', float(gt_boundaries_found_1_sum) / float(song_count)])
         csv_writer.writerow(['Average Percent of Ground Truth Boundaries (3)', float(gt_boundaries_2_sum) / float(song_count)])
         csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (3)', float(gt_boundaries_found_2_sum) / float(song_count)])
+        csv_writer.writerow(['Average Percent of Ground Truth Boundaries (2 beats)', float(gt_boundaries_3_sum) / float(song_count)])
+        csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (2 beats)', float(gt_boundaries_found_3_sum) / float(song_count)])
 
         csv_writer.writerow(['Average Rand Index Score', float(rand_index_sum) / float(song_count)])
 

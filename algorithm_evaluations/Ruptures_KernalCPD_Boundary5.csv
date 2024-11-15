@@ -1,1 +1,148 @@
 Ruptures_KernalCPD_Boundary5
+
+CallMeMaybe_Ruptures_KernalCPD_Boundary5.csv
+Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Nearest_Beat,Nearest_Downbeat,Dist_to_Nearest_Downbeat,Nearest_GT_Segment,Dist_to_Nearest_GT_Segment
+1,0.0,,NA,NA,NA,NA,NA,NA,NA
+2,9.183492063492064,,8.999996,3,0.18349606349206482,9.999996,-0.8165039365079352,4.0,5.183492063492064
+3,107.13687074829932,,106.999996,3,0.13687474829932,107.999996,-0.86312525170068,91.999996,15.13687474829932
+4,187.59401360544217,,187.499996,4,0.09401760544216131,187.999996,-0.4059823945578387,187.999996,-0.4059823945578387
+5,195.36108843537414,,195.050771,1,0.31031743537414513,195.050771,0.31031743537414513,195.050771,0.31031743537414513
+6,198.19392290249434,,NA,NA,NA,NA,NA,NA,NA
+Averages,,,,0.18117646315192282,,0.5989822545351497,,5.259166660430842
+Proximity Scores,,,,0.36235292630384563,,1.1979645090702995,,10.518333320861684
+Percent of ground truth boundaries (0.5 sec),0.5
+Percent of ground truth boundaries found (0.5 sec),0.25
+Percent of ground truth boundaries (3 sec),0.5
+Percent of ground truth boundaries found (3 sec),0.25
+Percent of ground truth boundaries (2 beats),0.5
+Percent of ground truth boundaries found (2 beats),0.25
+Average time between beats,0.5
+Rand Index Score,0.3166240409207161
+
+Clocks_Ruptures_KernalCPD_Boundary5.csv
+Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Nearest_Beat,Nearest_Downbeat,Dist_to_Nearest_Downbeat,Nearest_GT_Segment,Dist_to_Nearest_GT_Segment
+1,0.0,,NA,NA,NA,NA,NA,NA,NA
+2,120.69732426303855,,120.577105,4,0.12021926303854968,121.03512,-0.3377957369614535,117.371,3.3263242630385577
+3,147.43510204081633,,147.59999,3,-0.16488795918365895,146.68396,0.751142040816319,146.68396,0.751142040816319
+4,177.27274376417233,,177.370965,4,-0.09822123582767972,177.82898,-0.5562362358276687,175.99692,1.275823764172344
+5,204.6722902494331,,204.851865,4,-0.17957475056689987,205.30988,-0.6375897505668888,205.30988,-0.6375897505668888
+6,236.17015873015873,,NA,NA,NA,NA,NA,NA,NA
+Averages,,,,0.14072580215419705,,0.5706909410430825,,1.4977199546485274
+Proximity Scores,,,,0.3090940953151364,,1.2534815749919992,,3.2896340779799695
+Percent of ground truth boundaries (0.5 sec),0.16666666666666666
+Percent of ground truth boundaries found (0.5 sec),0.1
+Percent of ground truth boundaries (3 sec),0.6666666666666666
+Percent of ground truth boundaries found (3 sec),0.4
+Percent of ground truth boundaries (2 beats),0.5
+Percent of ground truth boundaries found (2 beats),0.3
+Average time between beats,0.4552846666667
+Rand Index Score,0.21923925876495046
+
+CoolerThanMe_Ruptures_KernalCPD_Boundary5.csv
+Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Nearest_Beat,Nearest_Downbeat,Dist_to_Nearest_Downbeat,Nearest_GT_Segment,Dist_to_Nearest_GT_Segment
+1,0.0,,NA,NA,NA,NA,NA,NA,NA
+2,31.834557823129252,,31.624584,4,0.2099738231292534,32.086122,-0.25156417687075106,32.086122,-0.25156417687075106
+3,45.847755102040814,,45.932262,3,-0.0845068979591872,45.009186,0.8385691020408146,46.3938,-0.5460448979591845
+4,148.17814058956915,,148.393698,1,-0.21555741043084709,148.393698,-0.21555741043084709,149.778312,-1.6001714104308462
+5,179.79210884353742,,179.778282,1,0.013826843537430022,179.778282,0.013826843537430022,179.778282,0.013826843537430022
+6,207.85342403628118,,NA,NA,NA,NA,NA,NA,NA
+Averages,,,,0.13096624376417942,,0.3298793832199607,,0.602901832199553
+Proximity Scores,,,,0.28376047858286735,,0.7147393783826266,,1.3062886093876407
+Percent of ground truth boundaries (0.5 sec),0.5
+Percent of ground truth boundaries found (0.5 sec),0.3333333333333333
+Percent of ground truth boundaries (3 sec),1.0
+Percent of ground truth boundaries found (3 sec),0.6666666666666666
+Percent of ground truth boundaries (2 beats),0.8333333333333334
+Percent of ground truth boundaries found (2 beats),0.5555555555555556
+Average time between beats,0.461538
+Rand Index Score,0.3003827707065117
+
+Dynamite_Ruptures_KernalCPD_Boundary5.csv
+Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Nearest_Beat,Nearest_Downbeat,Dist_to_Nearest_Downbeat,Nearest_GT_Segment,Dist_to_Nearest_GT_Segment
+1,0.0,,NA,NA,NA,NA,NA,NA,NA
+2,23.73079365079365,,23.542552,4,0.18824165079364974,24.042552,-0.31175834920635026,32.042552,-8.31175834920635
+3,47.56607709750567,,47.542552,4,0.02352509750566867,48.042552,-0.47647490249433133,47.542552,0.02352509750566867
+4,79.48190476190476,,79.542552,4,-0.06064723809524253,80.042552,-0.5606472380952425,88.042552,-8.560647238095243
+5,103.29396825396826,,103.542552,4,-0.24858374603174127,104.042552,-0.7485837460317413,103.542552,-0.24858374603174127
+6,212.0214058956916,,NA,NA,NA,NA,NA,NA,NA
+Averages,,,,0.13024943310657555,,0.5243660589569163,,4.286128607709751
+Proximity Scores,,,,0.2621724594009382,,1.0554697707637994,,8.62733028152623
+Percent of ground truth boundaries (0.5 sec),0.5
+Percent of ground truth boundaries found (0.5 sec),0.2727272727272727
+Percent of ground truth boundaries (3 sec),0.5
+Percent of ground truth boundaries found (3 sec),0.2727272727272727
+Percent of ground truth boundaries (2 beats),0.5
+Percent of ground truth boundaries found (2 beats),0.2727272727272727
+Average time between beats,0.49680822083369997
+Rand Index Score,0.23000727008360597
+
+Fireflies_Ruptures_KernalCPD_Boundary5.csv
+Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Nearest_Beat,Nearest_Downbeat,Dist_to_Nearest_Downbeat,Nearest_GT_Segment,Dist_to_Nearest_GT_Segment
+1,0.0,,NA,NA,NA,NA,NA,NA,NA
+2,23.707573696145126,,23.99994,1,-0.29236630385487317,23.99994,-0.29236630385487317,26.6666,-2.9590263038548734
+3,91.76526077097506,,91.999738,3,-0.2344772290249324,90.666408,1.098852770975057,90.666408,1.098852770975057
+4,113.71972789115647,,113.999683,4,-0.2799551088435379,114.666348,-0.9466201088435326,114.666348,-0.9466201088435326
+5,157.39646258503402,,157.332928,1,0.06353458503400589,157.332928,0.06353458503400589,157.332928,0.06353458503400589
+6,203.6738321995465,,NA,NA,NA,NA,NA,NA,NA
+Averages,,,,0.21758330668933734,,0.6003434421768672,,1.2670084421768673
+Proximity Scores,,,,0.3263757759734459,,0.900517414558837,,1.900517414558837
+Percent of ground truth boundaries (0.5 sec),0.3333333333333333
+Percent of ground truth boundaries found (0.5 sec),0.15384615384615385
+Percent of ground truth boundaries (3 sec),0.8333333333333334
+Percent of ground truth boundaries found (3 sec),0.38461538461538464
+Percent of ground truth boundaries (2 beats),0.6666666666666666
+Percent of ground truth boundaries found (2 beats),0.3076923076923077
+Average time between beats,0.6666650000000001
+Rand Index Score,0.3844161450464062
+
+OverMyHead_Ruptures_KernalCPD_Boundary5.csv
+Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Nearest_Beat,Nearest_Downbeat,Dist_to_Nearest_Downbeat,Nearest_GT_Segment,Dist_to_Nearest_GT_Segment
+1,0.0,,NA,NA,NA,NA,NA,NA,NA
+2,4.539501133786848,,4.7705535,2,-0.23105236621315228,4.2533125,0.286188633786848,4.2533125,0.286188633786848
+3,92.97265306122449,,93.2187645,1,-0.24611143877551456,93.2187645,-0.24611143877551456,95.2877285,-2.3150754387755086
+4,142.4195918367347,,142.3566595,4,0.0629323367346899,142.8739005,-0.4543086632652944,144.9428645,-2.523272663265317
+5,195.51201814058956,,195.6324825,3,-0.1204643594104482,194.5980005,0.9140176405895488,194.5980005,0.9140176405895488
+6,229.5873015873016,,NA,NA,NA,NA,NA,NA,NA
+Averages,,,,0.16514012528345123,,0.47515659410430144,,1.5096385941043056
+Proximity Scores,,,,0.3192711430135106,,0.918636755601937,,2.9186367556019452
+Percent of ground truth boundaries (0.5 sec),0.3333333333333333
+Percent of ground truth boundaries found (0.5 sec),0.15384615384615385
+Percent of ground truth boundaries (3 sec),1.0
+Percent of ground truth boundaries found (3 sec),0.46153846153846156
+Percent of ground truth boundaries (2 beats),0.5
+Percent of ground truth boundaries found (2 beats),0.23076923076923078
+Average time between beats,0.517241
+Rand Index Score,0.2468382494698284
+
+Solo_Ruptures_KernalCPD_Boundary5.csv
+Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Nearest_Beat,Nearest_Downbeat,Dist_to_Nearest_Downbeat,Nearest_GT_Segment,Dist_to_Nearest_GT_Segment
+1,0.0,,NA,NA,NA,NA,NA,NA,NA
+2,1.486077097505669,,1.44230625,4,0.043770847505669064,1.90384425,-0.41776715249433094,0.05769225,1.428384847505669
+3,20.131655328798185,,19.90382625,4,0.22782907879818382,20.36536425,-0.23370892120181352,22.21151625,-2.0798609212018135
+4,155.7942857142857,,155.59599825,2,0.19828746428569843,155.13446025,0.6598254642857171,155.13446025,0.6598254642857171
+5,185.56226757369615,,185.59596825,3,-0.03370067630385165,184.67289225,0.8893753236961572,199.44210825,-13.879840676303843
+6,199.72643990929706,,NA,NA,NA,NA,NA,NA,NA
+Averages,,,,0.12589701672335074,,0.5501692154195047,,4.5119779773242605
+Proximity Scores,,,,0.27277714234440226,,1.1920344921100856,,9.775962060164625
+Percent of ground truth boundaries (0.5 sec),0.3333333333333333
+Percent of ground truth boundaries found (0.5 sec),0.2222222222222222
+Percent of ground truth boundaries (3 sec),0.8333333333333334
+Percent of ground truth boundaries found (3 sec),0.4444444444444444
+Percent of ground truth boundaries (2 beats),0.5
+Percent of ground truth boundaries found (2 beats),0.3333333333333333
+Average time between beats,0.461538
+Rand Index Score,0.31657032027304444
+
+Average Distance to Nearest Beat (Average),0.15596262726757346
+Average Distance to Nearest Beat (Proximity Score),0.3051148601334495
+Average Distance to Nearest Downbeat (Average),0.5213696984936832
+Average Distance to Nearest Downbeat (Proximity Score),1.0332634136399406
+Average Distance to Nearest GT Segment (Average),2.7049345812277292
+Average Distance to Nearest GT Segment (Proximity Score),5.4766717885829905
+Average Percent of Ground Truth Boundaries (0.5),0.38095238095238093
+Average Percent of Ground Truth Boundaries Found (0.5),0.21228216228216226
+Average Percent of Ground Truth Boundaries (3),0.7619047619047619
+Average Percent of Ground Truth Boundaries Found (3),0.41142746142746145
+Average Percent of Ground Truth Boundaries (2 beats),0.5714285714285714
+Average Percent of Ground Truth Boundaries Found (2 beats),0.3214396714396715
+Average Rand Index Score,0.2877254364664376

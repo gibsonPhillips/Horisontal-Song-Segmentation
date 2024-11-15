@@ -31,6 +31,7 @@ def T1__parse_algo_beats_txt_to_tuples(url):
 # (id,start,end,label) with banner
 def T2__parse_algo_beats_txt_to_tuples(url):
     algo_beats = []
+    labels = []
     with open(url, "r") as file:
         for line in file:
             if (line.strip() == "id,start,end,label"):
@@ -41,6 +42,7 @@ def T2__parse_algo_beats_txt_to_tuples(url):
                 start = float(parts[1])
 
                 algo_beats.append(start)
+                labels.append(parts[3])
 
-    return algo_beats
+    return algo_beats, labels
 
