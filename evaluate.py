@@ -187,7 +187,9 @@ with open("compiled_evaluation_outputs.csv", mode='w', newline='') as csv_file:
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(["All Evaluation Data"])
 
+final_heuristics = []
 
+#MASTER LOOP
 for folder in os.scandir("outputs"):
     print(folder.name)
     csv_path = "algorithm_evaluations/" + folder.name + ".csv"
@@ -211,6 +213,9 @@ for folder in os.scandir("outputs"):
     with open(csv_path, mode='w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow([folder.name])
+
+
+
     for song in os.scandir(folder.path):
         songNameSubstring = song.name.split("_")[0]
 
@@ -228,8 +233,10 @@ for folder in os.scandir("outputs"):
         song_count += 1
         rand_index_sum += rand_index_score
 
+        #Create the csv for specific set of outputs
         nearest_any_beat, nearest_downbeats, nearest_gt_segments, nearest_any_beat_ps, nearest_downbeats_ps, nearest_gt_segments_ps, gt_boundaries_1, gt_boundaries_found_1, gt_boundaries_2, gt_boundaries_found_2, gt_boundaries_3, gt_boundaries_found_3 = write_csv(csv_path, song.name, labels, anno_beats, anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, rand_index_score)
-        
+
+        #Add to the sums
         nearest_any_beat_sum += nearest_any_beat
         nearest_downbeats_sum += nearest_downbeats
         nearest_gt_segments_sum += nearest_gt_segments
@@ -243,6 +250,7 @@ for folder in os.scandir("outputs"):
         gt_boundaries_3_sum += gt_boundaries_3
         gt_boundaries_found_3_sum += gt_boundaries_found_3
 
+    #Add to the end of csv (after all songs)
     with open(csv_path, mode='a', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow([])
@@ -283,6 +291,10 @@ for folder in os.scandir("outputs"):
 
         csv_writer.writerow(['Average Rand Index Score', float(rand_index_sum) / float(song_count)])
 
+    # For final heuristic calculations
+    final_heuristics.append([folder.name, float(gt_boundaries_1_sum) / float(song_count), float(gt_boundaries_found_1_sum) / float(song_count), float(gt_boundaries_2_sum) / float(song_count), float(gt_boundaries_found_2_sum) / float(song_count), float(gt_boundaries_3_sum) / float(song_count), float(gt_boundaries_found_3_sum) / float(song_count)])
+
+print(final_heuristics)
 
 
 
