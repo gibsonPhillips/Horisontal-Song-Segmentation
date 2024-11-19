@@ -163,7 +163,7 @@ def write_csv(csv_name, song_name, labels, anno_beats, anno_segments, boundaries
         gt_boundaries_found_3 = groundTruthBoundariesFound(nearest_segments_distance, nearest_segments, anno_segments, averageTimeBetweenBeats*2)
 
 
-# anal headers
+        # anal headers
         csv_writer.writerow(["Averages", "", "", "", nearest_any_beat, "", nearest_downbeats, "", nearest_gt_segments])
         csv_writer.writerow(["Proximity Scores", "", "", "", nearest_any_beat_ps, "", nearest_downbeats_ps, "", nearest_gt_segments_ps])
         csv_writer.writerow(["Percent of ground truth boundaries (0.5 sec)", gt_boundaries_1])
@@ -176,6 +176,11 @@ def write_csv(csv_name, song_name, labels, anno_beats, anno_segments, boundaries
         csv_writer.writerow(["Rand Index Score", rand_index_score])
     return nearest_any_beat, nearest_downbeats, nearest_gt_segments, nearest_any_beat_ps, nearest_downbeats_ps, nearest_gt_segments_ps, gt_boundaries_1, gt_boundaries_found_1, gt_boundaries_2, gt_boundaries_found_2, gt_boundaries_3, gt_boundaries_found_3
 
+def linear_normalize(data):
+    min_val = min(data)
+    max_val = max(data)
+    normalized_data = [(x - min_val) / (max_val - min_val) for x in data]
+    return normalized_data
 
 try:
     os.mkdir('algorithm_evaluations')
@@ -187,7 +192,7 @@ with open("compiled_evaluation_outputs.csv", mode='w', newline='') as csv_file:
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(["All Evaluation Data"])
 
-final_heuristics = []
+evaluation_heuristics = []
 
 #MASTER LOOP
 for folder in os.scandir("outputs"):
@@ -292,12 +297,33 @@ for folder in os.scandir("outputs"):
         csv_writer.writerow(['Average Rand Index Score', float(rand_index_sum) / float(song_count)])
 
     # For final heuristic calculations
-    final_heuristics.append([folder.name, float(gt_boundaries_1_sum) / float(song_count), float(gt_boundaries_found_1_sum) / float(song_count), float(gt_boundaries_2_sum) / float(song_count), float(gt_boundaries_found_2_sum) / float(song_count), float(gt_boundaries_3_sum) / float(song_count), float(gt_boundaries_found_3_sum) / float(song_count)])
+    evaluation_heuristics.append([folder.name, float(gt_boundaries_1_sum) / float(song_count), float(gt_boundaries_found_1_sum) / float(song_count), float(gt_boundaries_2_sum) / float(song_count), float(gt_boundaries_found_2_sum) / float(song_count), float(gt_boundaries_3_sum) / float(song_count), float(gt_boundaries_found_3_sum) / float(song_count), float(rand_index_sum) / float(song_count)])
 
-print(final_heuristics)
+#Normalization
 
+normalized_1 = linear_normalize([row[1] for row in evaluation_heuristics])
+normalized_found_1 = linear_normalize([row[2] for row in evaluation_heuristics])
+normalized_2 = linear_normalize([row[3] for row in evaluation_heuristics])
+normalized_found_2 = linear_normalize([row[4] for row in evaluation_heuristics])
+normalized_3 = linear_normalize([row[5] for row in evaluation_heuristics])
+normalized_found_3 = linear_normalize([row[6] for row in evaluation_heuristics])
+normalized_rand_index = linear_normalize([row[7] for row in evaluation_heuristics])
 
+final_scores = []
 
+#Calculate scores
+for i in range(len(evaluation_heuristics)):
+
+    #Get the ground truth prediction score
+    gt_prediction_score = (normalized_1[i] + normalized_found_1[i] + normalized_2[i] + normalized_found_2[i] + normalized_3[i] + normalized_found_3[i]) / 6
+
+    #take the average between ground truth prediction score and rand index
+    final_scores.append([evaluation_heuristics[i][0], (gt_prediction_score + normalized_rand_index[i])/2])
+
+with open("final_algorithm_scores.csv", mode='w', newline='') as csv_file:
+    csv_writer = csv.writer(csv_file)
+    for row in final_scores:
+        csv_writer.writerow(row)
 
 # type 0 parses the vex stuff (idk ask giobspn)
 # (timestamp, beat, measure)

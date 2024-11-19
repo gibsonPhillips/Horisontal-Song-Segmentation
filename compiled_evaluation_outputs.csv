@@ -299,3 +299,303 @@ Average Percent of Ground Truth Boundaries Found (3),0.6581918081918082
 Average Percent of Ground Truth Boundaries (2 beats),0.3574520717377861
 Average Percent of Ground Truth Boundaries Found (2 beats),0.3948551448551449
 Average Rand Index Score,0.7151502601351465
+
+MSAF_Foote_2DFourierMagnitudeCoefficients
+Average Distance to Nearest Beat (Average),0.12147943072511623
+Average Distance to Nearest Beat (Proximity Score),0.2198375861298041
+Average Distance to Nearest Downbeat (Average),0.5224184897753812
+Average Distance to Nearest Downbeat (Proximity Score),1.0200685764640853
+Average Distance to Nearest GT Segment (Average),4.398018263998606
+Average Distance to Nearest GT Segment (Proximity Score),8.871398932147233
+Average Percent of Ground Truth Boundaries (0.5),0.23166119594691023
+Average Percent of Ground Truth Boundaries Found (0.5),0.22076812076812077
+Average Percent of Ground Truth Boundaries (3),0.6028108795965937
+Average Percent of Ground Truth Boundaries Found (3),0.6234376734376735
+Average Percent of Ground Truth Boundaries (2 beats),0.36356203320489033
+Average Percent of Ground Truth Boundaries Found (2 beats),0.3609224109224109
+Average Rand Index Score,0.7026550698244843
+
+MSAF_Foote_KMeansCNMF
+Average Distance to Nearest Beat (Average),0.12147943072511623
+Average Distance to Nearest Beat (Proximity Score),0.2198375861298041
+Average Distance to Nearest Downbeat (Average),0.5224184897753812
+Average Distance to Nearest Downbeat (Proximity Score),1.0200685764640853
+Average Distance to Nearest GT Segment (Average),4.398018263998606
+Average Distance to Nearest GT Segment (Proximity Score),8.871398932147233
+Average Percent of Ground Truth Boundaries (0.5),0.23166119594691023
+Average Percent of Ground Truth Boundaries Found (0.5),0.22076812076812077
+Average Percent of Ground Truth Boundaries (3),0.6028108795965937
+Average Percent of Ground Truth Boundaries Found (3),0.6234376734376735
+Average Percent of Ground Truth Boundaries (2 beats),0.36356203320489033
+Average Percent of Ground Truth Boundaries Found (2 beats),0.3609224109224109
+Average Rand Index Score,0.6473231643869034
+
+MSAF_Foote_Laplacian
+Average Distance to Nearest Beat (Average),0.12147943072511623
+Average Distance to Nearest Beat (Proximity Score),0.2198375861298041
+Average Distance to Nearest Downbeat (Average),0.5224184897753812
+Average Distance to Nearest Downbeat (Proximity Score),1.0200685764640853
+Average Distance to Nearest GT Segment (Average),4.398018263998606
+Average Distance to Nearest GT Segment (Proximity Score),8.871398932147233
+Average Percent of Ground Truth Boundaries (0.5),0.23166119594691023
+Average Percent of Ground Truth Boundaries Found (0.5),0.22076812076812077
+Average Percent of Ground Truth Boundaries (3),0.6028108795965937
+Average Percent of Ground Truth Boundaries Found (3),0.6234376734376735
+Average Percent of Ground Truth Boundaries (2 beats),0.36356203320489033
+Average Percent of Ground Truth Boundaries Found (2 beats),0.3609224109224109
+Average Rand Index Score,0.6603956356268549
+
+MSAF_Foote_VariableMarkovOracle
+Average Distance to Nearest Beat (Average),0.12147943072511623
+Average Distance to Nearest Beat (Proximity Score),0.2198375861298041
+Average Distance to Nearest Downbeat (Average),0.5224184897753812
+Average Distance to Nearest Downbeat (Proximity Score),1.0200685764640853
+Average Distance to Nearest GT Segment (Average),4.398018263998606
+Average Distance to Nearest GT Segment (Proximity Score),8.871398932147233
+Average Percent of Ground Truth Boundaries (0.5),0.23166119594691023
+Average Percent of Ground Truth Boundaries Found (0.5),0.22076812076812077
+Average Percent of Ground Truth Boundaries (3),0.6028108795965937
+Average Percent of Ground Truth Boundaries Found (3),0.6234376734376735
+Average Percent of Ground Truth Boundaries (2 beats),0.36356203320489033
+Average Percent of Ground Truth Boundaries Found (2 beats),0.3609224109224109
+Average Rand Index Score,0.7570935022750659
+
+MSAF_KMeansCNMF_2DFourierMagnitudeCoefficients
+Average Distance to Nearest Beat (Average),0.2333187199696099
+Average Distance to Nearest Beat (Proximity Score),0.392633272268539
+Average Distance to Nearest Downbeat (Average),0.6829874690424231
+Average Distance to Nearest Downbeat (Proximity Score),1.299136883859223
+Average Distance to Nearest GT Segment (Average),4.5658319191032195
+Average Distance to Nearest GT Segment (Proximity Score),9.169721900365293
+Average Percent of Ground Truth Boundaries (0.5),0.1855144855144855
+Average Percent of Ground Truth Boundaries Found (0.5),0.17122877122877123
+Average Percent of Ground Truth Boundaries (3),0.5210248085248085
+Average Percent of Ground Truth Boundaries Found (3),0.467027417027417
+Average Percent of Ground Truth Boundaries (2 beats),0.282001332001332
+Average Percent of Ground Truth Boundaries Found (2 beats),0.24625929625929624
+Average Rand Index Score,0.6659976886419321
+
+MSAF_KMeansCNMF_KMeansCNMF
+Average Distance to Nearest Beat (Average),0.1736622975596538
+Average Distance to Nearest Beat (Proximity Score),0.3036065720834004
+Average Distance to Nearest Downbeat (Average),0.6740340483465667
+Average Distance to Nearest Downbeat (Proximity Score),1.3051975084082659
+Average Distance to Nearest GT Segment (Average),4.5369244525718075
+Average Distance to Nearest GT Segment (Proximity Score),9.07680898532908
+Average Percent of Ground Truth Boundaries (0.5),0.1610131931560503
+Average Percent of Ground Truth Boundaries Found (0.5),0.13008103008103006
+Average Percent of Ground Truth Boundaries (3),0.501533189033189
+Average Percent of Ground Truth Boundaries Found (3),0.4847929847929847
+Average Percent of Ground Truth Boundaries (2 beats),0.2603896103896104
+Average Percent of Ground Truth Boundaries Found (2 beats),0.2257908757908758
+Average Rand Index Score,0.6564901201717471
+
+MSAF_KMeansCNMF_Laplacian
+Average Distance to Nearest Beat (Average),0.17566613114854732
+Average Distance to Nearest Beat (Proximity Score),0.3061826149864794
+Average Distance to Nearest Downbeat (Average),0.6270647613832419
+Average Distance to Nearest Downbeat (Proximity Score),1.1978226181074894
+Average Distance to Nearest GT Segment (Average),4.425561106034392
+Average Distance to Nearest GT Segment (Proximity Score),8.82243028102867
+Average Percent of Ground Truth Boundaries (0.5),0.1660492868476062
+Average Percent of Ground Truth Boundaries Found (0.5),0.13166833166833164
+Average Percent of Ground Truth Boundaries (3),0.4878419899428303
+Average Percent of Ground Truth Boundaries Found (3),0.4553391053391053
+Average Percent of Ground Truth Boundaries (2 beats),0.2857174338266776
+Average Percent of Ground Truth Boundaries Found (2 beats),0.2376956376956377
+Average Rand Index Score,0.5835767049516974
+
+MSAF_KMeansCNMF_VariableMarkovOracle
+Average Distance to Nearest Beat (Average),0.18856633105077772
+Average Distance to Nearest Beat (Proximity Score),0.3249385396274644
+Average Distance to Nearest Downbeat (Average),0.6290006961243783
+Average Distance to Nearest Downbeat (Proximity Score),1.2207023451148147
+Average Distance to Nearest GT Segment (Average),4.612277631992657
+Average Distance to Nearest GT Segment (Proximity Score),9.198701480237162
+Average Percent of Ground Truth Boundaries (0.5),0.20374353090518507
+Average Percent of Ground Truth Boundaries Found (0.5),0.16793206793206794
+Average Percent of Ground Truth Boundaries (3),0.49129398170751554
+Average Percent of Ground Truth Boundaries Found (3),0.4542069042069041
+Average Percent of Ground Truth Boundaries (2 beats),0.27960648374182206
+Average Percent of Ground Truth Boundaries Found (2 beats),0.255033855033855
+Average Rand Index Score,0.7139123346552035
+
+MSAF_Laplacian_2DFourierMagnitudeCoefficients
+Average Distance to Nearest Beat (Average),0.1460244282829944
+Average Distance to Nearest Beat (Proximity Score),0.25641648272666273
+Average Distance to Nearest Downbeat (Average),0.5069189986051884
+Average Distance to Nearest Downbeat (Proximity Score),0.9879491651602711
+Average Distance to Nearest GT Segment (Average),4.117604342522056
+Average Distance to Nearest GT Segment (Proximity Score),8.383449828335145
+Average Percent of Ground Truth Boundaries (0.5),0.2451235039470334
+Average Percent of Ground Truth Boundaries Found (0.5),0.21679986679986682
+Average Percent of Ground Truth Boundaries (3),0.6139801375095493
+Average Percent of Ground Truth Boundaries Found (3),0.571983571983572
+Average Percent of Ground Truth Boundaries (2 beats),0.36763432645785593
+Average Percent of Ground Truth Boundaries Found (2 beats),0.33421023421023416
+Average Rand Index Score,0.6651892661651068
+
+MSAF_Laplacian_KMeansCNMF
+Average Distance to Nearest Beat (Average),0.1460244282829944
+Average Distance to Nearest Beat (Proximity Score),0.25641648272666273
+Average Distance to Nearest Downbeat (Average),0.5069189986051884
+Average Distance to Nearest Downbeat (Proximity Score),0.9879491651602711
+Average Distance to Nearest GT Segment (Average),4.117604342522056
+Average Distance to Nearest GT Segment (Proximity Score),8.383449828335145
+Average Percent of Ground Truth Boundaries (0.5),0.2451235039470334
+Average Percent of Ground Truth Boundaries Found (0.5),0.21679986679986682
+Average Percent of Ground Truth Boundaries (3),0.6139801375095493
+Average Percent of Ground Truth Boundaries Found (3),0.571983571983572
+Average Percent of Ground Truth Boundaries (2 beats),0.36763432645785593
+Average Percent of Ground Truth Boundaries Found (2 beats),0.33421023421023416
+Average Rand Index Score,0.6518972956368392
+
+MSAF_Laplacian_Laplacian
+Average Distance to Nearest Beat (Average),0.1460244282829944
+Average Distance to Nearest Beat (Proximity Score),0.25641648272666273
+Average Distance to Nearest Downbeat (Average),0.5069189986051884
+Average Distance to Nearest Downbeat (Proximity Score),0.9879491651602711
+Average Distance to Nearest GT Segment (Average),4.117604342522056
+Average Distance to Nearest GT Segment (Proximity Score),8.383449828335145
+Average Percent of Ground Truth Boundaries (0.5),0.2451235039470334
+Average Percent of Ground Truth Boundaries Found (0.5),0.21679986679986682
+Average Percent of Ground Truth Boundaries (3),0.6139801375095493
+Average Percent of Ground Truth Boundaries Found (3),0.571983571983572
+Average Percent of Ground Truth Boundaries (2 beats),0.36763432645785593
+Average Percent of Ground Truth Boundaries Found (2 beats),0.33421023421023416
+Average Rand Index Score,0.683900013181818
+
+MSAF_Laplacian_VariableMarkovOracle
+Average Distance to Nearest Beat (Average),0.1460244282829944
+Average Distance to Nearest Beat (Proximity Score),0.25641648272666273
+Average Distance to Nearest Downbeat (Average),0.5069189986051884
+Average Distance to Nearest Downbeat (Proximity Score),0.9879491651602711
+Average Distance to Nearest GT Segment (Average),4.117604342522056
+Average Distance to Nearest GT Segment (Proximity Score),8.383449828335145
+Average Percent of Ground Truth Boundaries (0.5),0.2451235039470334
+Average Percent of Ground Truth Boundaries Found (0.5),0.21679986679986682
+Average Percent of Ground Truth Boundaries (3),0.6139801375095493
+Average Percent of Ground Truth Boundaries Found (3),0.571983571983572
+Average Percent of Ground Truth Boundaries (2 beats),0.36763432645785593
+Average Percent of Ground Truth Boundaries Found (2 beats),0.33421023421023416
+Average Rand Index Score,0.7154633970555293
+
+MSAF_StructuralFeature_2DFourierMagnitudeCoefficients
+Average Distance to Nearest Beat (Average),0.10800435203144547
+Average Distance to Nearest Beat (Proximity Score),0.1986851908857127
+Average Distance to Nearest Downbeat (Average),0.5307104308984333
+Average Distance to Nearest Downbeat (Proximity Score),1.0266297804522375
+Average Distance to Nearest GT Segment (Average),4.376531644740965
+Average Distance to Nearest GT Segment (Proximity Score),8.938894082889632
+Average Percent of Ground Truth Boundaries (0.5),0.23937938811888393
+Average Percent of Ground Truth Boundaries Found (0.5),0.25405705405705403
+Average Percent of Ground Truth Boundaries (3),0.5958929026155916
+Average Percent of Ground Truth Boundaries Found (3),0.6558108558108557
+Average Percent of Ground Truth Boundaries (2 beats),0.4017734366473862
+Average Percent of Ground Truth Boundaries Found (2 beats),0.42041847041847047
+Average Rand Index Score,0.7072862831929178
+
+MSAF_StructuralFeature_KMeansCNMF
+Average Distance to Nearest Beat (Average),0.10800435203144547
+Average Distance to Nearest Beat (Proximity Score),0.1986851908857127
+Average Distance to Nearest Downbeat (Average),0.5307104308984333
+Average Distance to Nearest Downbeat (Proximity Score),1.0266297804522375
+Average Distance to Nearest GT Segment (Average),4.376531644740965
+Average Distance to Nearest GT Segment (Proximity Score),8.938894082889632
+Average Percent of Ground Truth Boundaries (0.5),0.23937938811888393
+Average Percent of Ground Truth Boundaries Found (0.5),0.25405705405705403
+Average Percent of Ground Truth Boundaries (3),0.5958929026155916
+Average Percent of Ground Truth Boundaries Found (3),0.6558108558108557
+Average Percent of Ground Truth Boundaries (2 beats),0.4017734366473862
+Average Percent of Ground Truth Boundaries Found (2 beats),0.42041847041847047
+Average Rand Index Score,0.6497530059890532
+
+MSAF_StructuralFeature_Laplacian
+Average Distance to Nearest Beat (Average),0.10800435203144547
+Average Distance to Nearest Beat (Proximity Score),0.1986851908857127
+Average Distance to Nearest Downbeat (Average),0.5307104308984333
+Average Distance to Nearest Downbeat (Proximity Score),1.0266297804522375
+Average Distance to Nearest GT Segment (Average),4.376531644740965
+Average Distance to Nearest GT Segment (Proximity Score),8.938894082889632
+Average Percent of Ground Truth Boundaries (0.5),0.23937938811888393
+Average Percent of Ground Truth Boundaries Found (0.5),0.25405705405705403
+Average Percent of Ground Truth Boundaries (3),0.5958929026155916
+Average Percent of Ground Truth Boundaries Found (3),0.6558108558108557
+Average Percent of Ground Truth Boundaries (2 beats),0.4017734366473862
+Average Percent of Ground Truth Boundaries Found (2 beats),0.42041847041847047
+Average Rand Index Score,0.6721885075244373
+
+MSAF_StructuralFeature_VariableMarkovOracle
+Average Distance to Nearest Beat (Average),0.10800435203144547
+Average Distance to Nearest Beat (Proximity Score),0.1986851908857127
+Average Distance to Nearest Downbeat (Average),0.5307104308984333
+Average Distance to Nearest Downbeat (Proximity Score),1.0266297804522375
+Average Distance to Nearest GT Segment (Average),4.376531644740965
+Average Distance to Nearest GT Segment (Proximity Score),8.938894082889632
+Average Percent of Ground Truth Boundaries (0.5),0.23937938811888393
+Average Percent of Ground Truth Boundaries Found (0.5),0.25405705405705403
+Average Percent of Ground Truth Boundaries (3),0.5958929026155916
+Average Percent of Ground Truth Boundaries Found (3),0.6558108558108557
+Average Percent of Ground Truth Boundaries (2 beats),0.4017734366473862
+Average Percent of Ground Truth Boundaries Found (2 beats),0.42041847041847047
+Average Rand Index Score,0.7588274771475781
+
+Ruptures_KernalCPD_Boundary5
+Average Distance to Nearest Beat (Average),0.15596262726757346
+Average Distance to Nearest Beat (Proximity Score),0.3051148601334495
+Average Distance to Nearest Downbeat (Average),0.5213696984936832
+Average Distance to Nearest Downbeat (Proximity Score),1.0332634136399406
+Average Distance to Nearest GT Segment (Average),2.7049345812277292
+Average Distance to Nearest GT Segment (Proximity Score),5.4766717885829905
+Average Percent of Ground Truth Boundaries (0.5),0.38095238095238093
+Average Percent of Ground Truth Boundaries Found (0.5),0.21228216228216226
+Average Percent of Ground Truth Boundaries (3),0.7619047619047619
+Average Percent of Ground Truth Boundaries Found (3),0.41142746142746145
+Average Percent of Ground Truth Boundaries (2 beats),0.5714285714285714
+Average Percent of Ground Truth Boundaries Found (2 beats),0.3214396714396715
+Average Rand Index Score,0.2877254364664376
+
+Ruptures_KernalCPD_Boundary8
+Average Distance to Nearest Beat (Average),0.17168501712972686
+Average Distance to Nearest Beat (Proximity Score),0.31262659953187405
+Average Distance to Nearest Downbeat (Average),0.5633796000161971
+Average Distance to Nearest Downbeat (Proximity Score),1.1025805403027058
+Average Distance to Nearest GT Segment (Average),3.468606211795433
+Average Distance to Nearest GT Segment (Proximity Score),7.164162843639876
+Average Percent of Ground Truth Boundaries (0.5),0.2698412698412698
+Average Percent of Ground Truth Boundaries Found (0.5),0.22656787656787655
+Average Percent of Ground Truth Boundaries (3),0.6825396825396826
+Average Percent of Ground Truth Boundaries Found (3),0.5190420690420691
+Average Percent of Ground Truth Boundaries (2 beats),0.46031746031746035
+Average Percent of Ground Truth Boundaries Found (2 beats),0.3831002331002331
+Average Rand Index Score,0.2877254364664376
+
+Ruptures_Window_Boundary5
+Average Distance to Nearest Beat (Average),1.7875286420345218
+Average Distance to Nearest Beat (Proximity Score),3.4993996102278673
+Average Distance to Nearest Downbeat (Average),2.187341510932945
+Average Distance to Nearest Downbeat (Proximity Score),4.303177168713229
+Average Distance to Nearest GT Segment (Average),5.82717353445396
+Average Distance to Nearest GT Segment (Proximity Score),11.78263802138726
+Average Percent of Ground Truth Boundaries (0.5),0.21428571428571427
+Average Percent of Ground Truth Boundaries Found (0.5),0.12067932067932066
+Average Percent of Ground Truth Boundaries (3),0.5714285714285714
+Average Percent of Ground Truth Boundaries Found (3),0.2762959262959263
+Average Percent of Ground Truth Boundaries (2 beats),0.2857142857142857
+Average Percent of Ground Truth Boundaries Found (2 beats),0.15853035853035852
+Average Rand Index Score,0.2877254364664376
+
+Ruptures_Window_Boundary8
+Average Distance to Nearest Beat (Average),1.1230277965473772
+Average Distance to Nearest Beat (Proximity Score),2.198492955337232
+Average Distance to Nearest Downbeat (Average),1.4995684357790737
+Average Distance to Nearest Downbeat (Proximity Score),2.9489566820358304
+Average Distance to Nearest GT Segment (Average),4.5527894961445465
+Average Distance to Nearest GT Segment (Proximity Score),9.28723892643374
+Average Percent of Ground Truth Boundaries (0.5),0.2698412698412699
+Average Percent of Ground Truth Boundaries Found (0.5),0.222982572982573
+Average Percent of Ground Truth Boundaries (3),0.6031746031746031
+Average Percent of Ground Truth Boundaries Found (3),0.4155622155622156
+Average Percent of Ground Truth Boundaries (2 beats),0.380952380952381
+Average Percent of Ground Truth Boundaries Found (2 beats),0.3087856587856588
+Average Rand Index Score,0.2877254364664376
