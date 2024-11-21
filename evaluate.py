@@ -182,160 +182,156 @@ def linear_normalize(data):
     normalized_data = [(x - min_val) / (max_val - min_val) for x in data]
     return normalized_data
 
-try:
-    os.mkdir('algorithm_evaluations')
-except FileExistsError:
-    print('algorithm_evaluations exists')
+def calculate_final_scores(heuristics):
+    # Normalization
+    normalized_1 = linear_normalize([row[1] for row in heuristics])
+    normalized_found_1 = linear_normalize([row[2] for row in heuristics])
+    normalized_2 = linear_normalize([row[3] for row in heuristics])
+    normalized_found_2 = linear_normalize([row[4] for row in heuristics])
+    normalized_3 = linear_normalize([row[5] for row in heuristics])
+    normalized_found_3 = linear_normalize([row[6] for row in heuristics])
+    normalized_rand_index = linear_normalize([row[7] for row in heuristics])
 
+    final_scores = []
 
-with open("compiled_evaluation_outputs.csv", mode='w', newline='') as csv_file:
-    csv_writer = csv.writer(csv_file)
-    csv_writer.writerow(["All Evaluation Data"])
+    # Calculate scores
+    for i in range(len(heuristics)):
+        # Get the ground truth prediction score
+        gt_prediction_score = (normalized_1[i] + normalized_found_1[i] + normalized_2[i] + normalized_found_2[i] +
+                               normalized_3[i] + normalized_found_3[i]) / 6
 
-evaluation_heuristics = []
+        # take the average between ground truth prediction score and rand index
+        final_scores.append([heuristics[i][0], gt_prediction_score, normalized_rand_index[i],
+                             (gt_prediction_score + normalized_rand_index[i]) / 2])
 
-#MASTER LOOP
-for folder in os.scandir("outputs"):
-    print(folder.name)
-    csv_path = "algorithm_evaluations/" + folder.name + ".csv"
-
-    song_count = 0
-    rand_index_sum = 0
-    nearest_any_beat_sum = 0
-    nearest_downbeats_sum = 0
-    nearest_gt_segments_sum = 0
-    nearest_any_beat_ps_sum = 0
-    nearest_downbeats_ps_sum = 0
-    nearest_gt_segments_ps_sum = 0
-    gt_boundaries_1_sum = 0
-    gt_boundaries_found_1_sum = 0
-    gt_boundaries_2_sum = 0
-    gt_boundaries_found_2_sum = 0
-    gt_boundaries_3_sum = 0
-    gt_boundaries_found_3_sum = 0
-
-
-    with open(csv_path, mode='w', newline='') as csv_file:
+    with open("final_algorithm_scores.csv", mode='w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
-        csv_writer.writerow([folder.name])
+        for row in final_scores:
+            csv_writer.writerow(row)
+
+def create_evaluation_csvs():
+    try:
+        os.mkdir('algorithm_evaluations')
+    except FileExistsError:
+      print('algorithm_evaluations exists')
 
 
-
-    for song in os.scandir(folder.path):
-        songNameSubstring = song.name.split("_")[0]
-
-        anno_beats_path = "ground_truth/Beats_Downbeats/" + songNameSubstring + "_Beats.txt"
-        anno_segments_path = "ground_truth/Segments/" + songNameSubstring + "_Segments.txt"
-        anno_beats = beat_intake(anno_beats_path)
-        anno_segments = segment_intake(anno_segments_path)
-
-        algo_segments, labels = T2__parse_algo_beats_txt_to_tuples(song.path)
-        nearest_beats, nearest_beats_distance = nearest_beat_finder(algo_segments, anno_beats)
-        nearest_segments, nearest_segments_distance = nearest_segment_finder(algo_segments, anno_segments)
-
-        #rand_index
-        rand_index_score = calculate_rand_index(anno_segments_path, song.path)
-        song_count += 1
-        rand_index_sum += rand_index_score
-
-        #Create the csv for specific set of outputs
-        nearest_any_beat, nearest_downbeats, nearest_gt_segments, nearest_any_beat_ps, nearest_downbeats_ps, nearest_gt_segments_ps, gt_boundaries_1, gt_boundaries_found_1, gt_boundaries_2, gt_boundaries_found_2, gt_boundaries_3, gt_boundaries_found_3 = write_csv(csv_path, song.name, labels, anno_beats, anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, rand_index_score)
-
-        #Add to the sums
-        nearest_any_beat_sum += nearest_any_beat
-        nearest_downbeats_sum += nearest_downbeats
-        nearest_gt_segments_sum += nearest_gt_segments
-        nearest_any_beat_ps_sum += nearest_any_beat_ps
-        nearest_downbeats_ps_sum += nearest_downbeats_ps
-        nearest_gt_segments_ps_sum += nearest_gt_segments_ps
-        gt_boundaries_1_sum += gt_boundaries_1
-        gt_boundaries_found_1_sum += gt_boundaries_found_1
-        gt_boundaries_2_sum += gt_boundaries_2
-        gt_boundaries_found_2_sum += gt_boundaries_found_2
-        gt_boundaries_3_sum += gt_boundaries_3
-        gt_boundaries_found_3_sum += gt_boundaries_found_3
-
-    #Add to the end of csv (after all songs)
-    with open(csv_path, mode='a', newline='') as csv_file:
+    with open("compiled_evaluation_outputs.csv", mode='w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
-        csv_writer.writerow([])
-        csv_writer.writerow(['Average Distance to Nearest Beat (Average)', float(nearest_any_beat_sum) / float(song_count)])
-        csv_writer.writerow(['Average Distance to Nearest Beat (Proximity Score)', float(nearest_any_beat_ps_sum) / float(song_count)])
-        csv_writer.writerow(['Average Distance to Nearest Downbeat (Average)', float(nearest_downbeats_sum) / float(song_count)])
-        csv_writer.writerow(['Average Distance to Nearest Downbeat (Proximity Score)', float(nearest_downbeats_ps_sum) / float(song_count)])
-        csv_writer.writerow(['Average Distance to Nearest GT Segment (Average)', float(nearest_gt_segments_sum) / float(song_count)])
-        csv_writer.writerow(['Average Distance to Nearest GT Segment (Proximity Score)', float(nearest_gt_segments_ps_sum) / float(song_count)])
+        csv_writer.writerow(["All Evaluation Data"])
 
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries (0.5)', float(gt_boundaries_1_sum) / float(song_count)])
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (0.5)', float(gt_boundaries_found_1_sum) / float(song_count)])
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries (3)', float(gt_boundaries_2_sum) / float(song_count)])
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (3)', float(gt_boundaries_found_2_sum) / float(song_count)])
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries (2 beats)', float(gt_boundaries_3_sum) / float(song_count)])
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (2 beats)', float(gt_boundaries_found_3_sum) / float(song_count)])
+    evaluation_heuristics = []
 
-        csv_writer.writerow(['Average Rand Index Score', float(rand_index_sum) / float(song_count)])
+    #MASTER LOOP
+    for folder in os.scandir("outputs"):
+        print(folder.name)
+        csv_path = "algorithm_evaluations/" + folder.name + ".csv"
 
-    # compiled output csv
-    with open("compiled_evaluation_outputs.csv", mode='a', newline='') as csv_file:
-        csv_writer = csv.writer(csv_file)
-        csv_writer.writerow([])
-        csv_writer.writerow([folder.name])
-        csv_writer.writerow(['Average Distance to Nearest Beat (Average)', float(nearest_any_beat_sum) / float(song_count)])
-        csv_writer.writerow(['Average Distance to Nearest Beat (Proximity Score)', float(nearest_any_beat_ps_sum) / float(song_count)])
-        csv_writer.writerow(['Average Distance to Nearest Downbeat (Average)', float(nearest_downbeats_sum) / float(song_count)])
-        csv_writer.writerow(['Average Distance to Nearest Downbeat (Proximity Score)', float(nearest_downbeats_ps_sum) / float(song_count)])
-        csv_writer.writerow(['Average Distance to Nearest GT Segment (Average)', float(nearest_gt_segments_sum) / float(song_count)])
-        csv_writer.writerow(['Average Distance to Nearest GT Segment (Proximity Score)', float(nearest_gt_segments_ps_sum) / float(song_count)])
-
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries (0.5)', float(gt_boundaries_1_sum) / float(song_count)])
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (0.5)', float(gt_boundaries_found_1_sum) / float(song_count)])
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries (3)', float(gt_boundaries_2_sum) / float(song_count)])
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (3)', float(gt_boundaries_found_2_sum) / float(song_count)])
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries (2 beats)', float(gt_boundaries_3_sum) / float(song_count)])
-        csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (2 beats)', float(gt_boundaries_found_3_sum) / float(song_count)])
-
-        csv_writer.writerow(['Average Rand Index Score', float(rand_index_sum) / float(song_count)])
-
-    # For final heuristic calculations
-    evaluation_heuristics.append([folder.name, float(gt_boundaries_1_sum) / float(song_count), float(gt_boundaries_found_1_sum) / float(song_count), float(gt_boundaries_2_sum) / float(song_count), float(gt_boundaries_found_2_sum) / float(song_count), float(gt_boundaries_3_sum) / float(song_count), float(gt_boundaries_found_3_sum) / float(song_count), float(rand_index_sum) / float(song_count)])
-
-#Normalization
-
-normalized_1 = linear_normalize([row[1] for row in evaluation_heuristics])
-normalized_found_1 = linear_normalize([row[2] for row in evaluation_heuristics])
-normalized_2 = linear_normalize([row[3] for row in evaluation_heuristics])
-normalized_found_2 = linear_normalize([row[4] for row in evaluation_heuristics])
-normalized_3 = linear_normalize([row[5] for row in evaluation_heuristics])
-normalized_found_3 = linear_normalize([row[6] for row in evaluation_heuristics])
-normalized_rand_index = linear_normalize([row[7] for row in evaluation_heuristics])
-
-final_scores = []
-
-#Calculate scores
-for i in range(len(evaluation_heuristics)):
-
-    #Get the ground truth prediction score
-    gt_prediction_score = (normalized_1[i] + normalized_found_1[i] + normalized_2[i] + normalized_found_2[i] + normalized_3[i] + normalized_found_3[i]) / 6
-
-    #take the average between ground truth prediction score and rand index
-    final_scores.append([evaluation_heuristics[i][0], gt_prediction_score, normalized_rand_index[i], (gt_prediction_score + normalized_rand_index[i])/2])
-
-with open("final_algorithm_scores.csv", mode='w', newline='') as csv_file:
-    csv_writer = csv.writer(csv_file)
-    for row in final_scores:
-        csv_writer.writerow(row)
-
-# type 0 parses the vex stuff (idk ask giobspn)
-# (timestamp, beat, measure)
-
-# type 1 parses the msaf style
-# either [timestamps] or [(timestamp)] haven't figured it out yet
-
-# type 2 parses the librosa style
-# (id,start,end,label) with banner
-# no actually (start, end, label)
+        song_count = 0
+        rand_index_sum = 0
+        nearest_any_beat_sum = 0
+        nearest_downbeats_sum = 0
+        nearest_gt_segments_sum = 0
+        nearest_any_beat_ps_sum = 0
+        nearest_downbeats_ps_sum = 0
+        nearest_gt_segments_ps_sum = 0
+        gt_boundaries_1_sum = 0
+        gt_boundaries_found_1_sum = 0
+        gt_boundaries_2_sum = 0
+        gt_boundaries_found_2_sum = 0
+        gt_boundaries_3_sum = 0
+        gt_boundaries_found_3_sum = 0
 
 
-# type 3?
+        with open(csv_path, mode='w', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            csv_writer.writerow([folder.name])
+
+
+
+        for song in os.scandir(folder.path):
+            songNameSubstring = song.name.split("_")[0]
+
+            anno_beats_path = "ground_truth/Beats_Downbeats/" + songNameSubstring + "_Beats.txt"
+            anno_segments_path = "ground_truth/Segments/" + songNameSubstring + "_Segments.txt"
+            anno_beats = beat_intake(anno_beats_path)
+            anno_segments = segment_intake(anno_segments_path)
+
+            algo_segments, labels = T2__parse_algo_beats_txt_to_tuples(song.path)
+            nearest_beats, nearest_beats_distance = nearest_beat_finder(algo_segments, anno_beats)
+            nearest_segments, nearest_segments_distance = nearest_segment_finder(algo_segments, anno_segments)
+
+            #rand_index
+            rand_index_score = calculate_rand_index(anno_segments_path, song.path)
+            song_count += 1
+            rand_index_sum += rand_index_score
+
+            #Write to the csv for specific set of outputs for the specific song
+            nearest_any_beat, nearest_downbeats, nearest_gt_segments, nearest_any_beat_ps, nearest_downbeats_ps, nearest_gt_segments_ps, gt_boundaries_1, gt_boundaries_found_1, gt_boundaries_2, gt_boundaries_found_2, gt_boundaries_3, gt_boundaries_found_3 = write_csv(csv_path, song.name, labels, anno_beats, anno_segments, algo_segments, nearest_beats, nearest_beats_distance, nearest_segments, nearest_segments_distance, rand_index_score)
+
+            #Add to the sums
+            nearest_any_beat_sum += nearest_any_beat
+            nearest_downbeats_sum += nearest_downbeats
+            nearest_gt_segments_sum += nearest_gt_segments
+            nearest_any_beat_ps_sum += nearest_any_beat_ps
+            nearest_downbeats_ps_sum += nearest_downbeats_ps
+            nearest_gt_segments_ps_sum += nearest_gt_segments_ps
+            gt_boundaries_1_sum += gt_boundaries_1
+            gt_boundaries_found_1_sum += gt_boundaries_found_1
+            gt_boundaries_2_sum += gt_boundaries_2
+            gt_boundaries_found_2_sum += gt_boundaries_found_2
+            gt_boundaries_3_sum += gt_boundaries_3
+            gt_boundaries_found_3_sum += gt_boundaries_found_3
+
+        #Add to the end of csv (after all songs)
+        with open(csv_path, mode='a', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            csv_writer.writerow([])
+            csv_writer.writerow(['Average Distance to Nearest Beat (Average)', float(nearest_any_beat_sum) / float(song_count)])
+            csv_writer.writerow(['Average Distance to Nearest Beat (Proximity Score)', float(nearest_any_beat_ps_sum) / float(song_count)])
+            csv_writer.writerow(['Average Distance to Nearest Downbeat (Average)', float(nearest_downbeats_sum) / float(song_count)])
+            csv_writer.writerow(['Average Distance to Nearest Downbeat (Proximity Score)', float(nearest_downbeats_ps_sum) / float(song_count)])
+            csv_writer.writerow(['Average Distance to Nearest GT Segment (Average)', float(nearest_gt_segments_sum) / float(song_count)])
+            csv_writer.writerow(['Average Distance to Nearest GT Segment (Proximity Score)', float(nearest_gt_segments_ps_sum) / float(song_count)])
+
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries (0.5)', float(gt_boundaries_1_sum) / float(song_count)])
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (0.5)', float(gt_boundaries_found_1_sum) / float(song_count)])
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries (3)', float(gt_boundaries_2_sum) / float(song_count)])
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (3)', float(gt_boundaries_found_2_sum) / float(song_count)])
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries (2 beats)', float(gt_boundaries_3_sum) / float(song_count)])
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (2 beats)', float(gt_boundaries_found_3_sum) / float(song_count)])
+
+            csv_writer.writerow(['Average Rand Index Score', float(rand_index_sum) / float(song_count)])
+
+        # compiled output csv
+        with open("compiled_evaluation_outputs.csv", mode='a', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            csv_writer.writerow([])
+            csv_writer.writerow([folder.name])
+            csv_writer.writerow(['Average Distance to Nearest Beat (Average)', float(nearest_any_beat_sum) / float(song_count)])
+            csv_writer.writerow(['Average Distance to Nearest Beat (Proximity Score)', float(nearest_any_beat_ps_sum) / float(song_count)])
+            csv_writer.writerow(['Average Distance to Nearest Downbeat (Average)', float(nearest_downbeats_sum) / float(song_count)])
+            csv_writer.writerow(['Average Distance to Nearest Downbeat (Proximity Score)', float(nearest_downbeats_ps_sum) / float(song_count)])
+            csv_writer.writerow(['Average Distance to Nearest GT Segment (Average)', float(nearest_gt_segments_sum) / float(song_count)])
+            csv_writer.writerow(['Average Distance to Nearest GT Segment (Proximity Score)', float(nearest_gt_segments_ps_sum) / float(song_count)])
+
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries (0.5)', float(gt_boundaries_1_sum) / float(song_count)])
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (0.5)', float(gt_boundaries_found_1_sum) / float(song_count)])
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries (3)', float(gt_boundaries_2_sum) / float(song_count)])
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (3)', float(gt_boundaries_found_2_sum) / float(song_count)])
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries (2 beats)', float(gt_boundaries_3_sum) / float(song_count)])
+            csv_writer.writerow(['Average Percent of Ground Truth Boundaries Found (2 beats)', float(gt_boundaries_found_3_sum) / float(song_count)])
+
+            csv_writer.writerow(['Average Rand Index Score', float(rand_index_sum) / float(song_count)])
+
+        # For final heuristic calculations
+        evaluation_heuristics.append([folder.name, float(gt_boundaries_1_sum) / float(song_count), float(gt_boundaries_found_1_sum) / float(song_count), float(gt_boundaries_2_sum) / float(song_count), float(gt_boundaries_found_2_sum) / float(song_count), float(gt_boundaries_3_sum) / float(song_count), float(gt_boundaries_found_3_sum) / float(song_count), float(rand_index_sum) / float(song_count)])
+
+    #Create the final CSV
+    calculate_final_scores(evaluation_heuristics)
+
+
+create_evaluation_csvs()
+
 
 print("ran successfullyy?")
