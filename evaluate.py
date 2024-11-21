@@ -197,15 +197,18 @@ def calculate_final_scores(heuristics):
     # Calculate scores
     for i in range(len(heuristics)):
         # Get the ground truth prediction score
-        gt_prediction_score = (normalized_1[i] + normalized_found_1[i] + normalized_2[i] + normalized_found_2[i] +
-                               normalized_3[i] + normalized_found_3[i]) / 6
+
+        precision = (normalized_2[i] + normalized_3[i]) / 2
+        recall = (normalized_found_2[i] + normalized_found_3[i]) / 2
+        low_tolerance = (normalized_1[i] + normalized_found_1[i]) / 2
 
         # take the average between ground truth prediction score and rand index
-        final_scores.append([heuristics[i][0], gt_prediction_score, normalized_rand_index[i],
-                             (gt_prediction_score + normalized_rand_index[i]) / 2])
+        final_scores.append([heuristics[i][0], precision, recall, low_tolerance, normalized_rand_index[i], (precision + recall + low_tolerance + normalized_rand_index[i]) / 4])
 
     with open("final_algorithm_scores.csv", mode='w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
+        header = ['Algorithm Name', 'Precision', 'Recall', 'Low Tolerance', 'Rand Index', 'Overall Score (Average)']
+        csv_writer.writerow(header)
         for row in final_scores:
             csv_writer.writerow(row)
 
