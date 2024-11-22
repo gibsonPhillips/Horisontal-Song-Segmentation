@@ -6,3 +6,4 @@ def getAnnotatedBeats():
         anno_beats = beat_intake(song)
         print(anno_beats)
 
+getAnnotatedBeats()
