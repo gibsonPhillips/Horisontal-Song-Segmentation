@@ -46,3 +46,16 @@ def T2__parse_algo_beats_txt_to_tuples(url):
 
     return algo_beats, labels
 
+# parses the csv outputs for downbeats in timestamp, beat style
+def parse_downbeats_to_tuples(url):
+    downbeats = []
+    with open(url, "r") as file:
+        for line in file:
+            if (line.strip() == "timestamp,beat"):
+                pass
+            else:
+                downbeats.append(line.strip().split(","))
+
+
+    return downbeats
+
