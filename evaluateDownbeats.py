@@ -45,9 +45,9 @@ def evaluateDownBeatTracker():
         predicted_beats = getDownbeatOutput(songName)
 
         predicted_start_index = getStart(anno_beats, predicted_beats)
-        timeCount, beatCount = checkBeats(anno_beats, predicted_beats, predicted_start_index)
+        how_many_beats_in_threshold, beatCount = checkBeats(anno_beats, predicted_beats, predicted_start_index)
 
-        print("Percentage of timestamps in time: ", timeCount/len(predicted_beats))
-        print("Percentage of timestamps from annotated: ", timeCount/len(anno_beats))
+        print("Percentage of timestamps in time: ", how_many_beats_in_threshold/len(predicted_beats))
+        print("Percentage of timestamps from annotated: ", how_many_beats_in_threshold/len(anno_beats))
         print("Percentage of downbeats/beats correct: ", beatCount/len(predicted_beats))
 
