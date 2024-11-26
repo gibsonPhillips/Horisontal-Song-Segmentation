@@ -32,7 +32,6 @@ def main():
         # Output timestamps and labels to csv
         with open(song.name + "Output.csv", "w") as file:
             file.write("timestamp,beat\n")
-            i = 1
             for timestamp, beat in result:
                 file.write(f"{timestamp:.2f},{beat}\n")
 
