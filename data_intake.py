@@ -51,12 +51,19 @@ def parse_downbeats_to_tuples(url):
     downbeats = []
     with open(url, "r") as file:
         for line in file:
-            if (line.strip() == "timestamp,beat"):
-                pass
+            items = line.split(",")
+            if(len(items) == 1):
+                items = line.split("\t")
+                
+            if(len(items) == 2):
+                if (line.strip() == "timestamp,beat"):
+                    pass
+                else:
+                    downbeats.append(line.strip().split(","))
+            elif(len(items) == 3):
+                downbeats.append([items[0], items[2].split("\n")[0]])
             else:
-                downbeats.append(line.strip().split(","))
-
-
+                print("something's wrong, I can feel it")        
     return downbeats
 
 # Takes a file location for exported label outputs for beat tracking and returns a list of the timestamps

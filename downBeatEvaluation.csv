@@ -1,0 +1,35 @@
+,Madmom,,BeatNet,,Bar and Beat,,QM
+Madmom,CallMeMaybe,,CallMeMaybe,,CallMeMaybe,,CallMeMaybe
+Percentage of timestamps in time,1,,0.95177665,,0.93765586,,0.00990099
+Percentage of timestamps from annotated,0.994750656,,0.984251969,,0.98687664,,0.002624672
+Percentage of downbeats/beats correct,0,,0,,0.950124688,,0
+,,,,,,,
+Madmom,Clocks,,Clocks,,Clocks,,Clocks
+Percentage of timestamps in time,0.97601476,,0.509225092,,0.968864469,,0.00729927
+Percentage of timestamps from annotated,1,,0.52173913,,1,,0.001890359
+Percentage of downbeats/beats correct,0,,0,,0.968864469,,0.02919708
+,,,,,,,
+Madmom,CoolerThanMe,,CoolerThanMe,,CoolerThanMe,,CoolerThanMe
+Percentage of timestamps in time,0.976241901,,0.052896725,,0.978354978,,0
+Percentage of timestamps from annotated,1,,0.046460177,,1,,0
+Percentage of downbeats/beats correct,0.974082073,,0,,0.976190476,,0
+,,,,,,,
+Madmom,Dynamite,,Dynamite,,Dynamite,,Dynamite
+Percentage of timestamps in time,0.871396896,,0.039735099,,0.867549669,,0
+Percentage of timestamps from annotated,1,,0.045801527,,1,,0
+Percentage of downbeats/beats correct,0.871396896,,0,,0,,0
+,,,,,,,
+Madmom,Fireflies,,Fireflies,,Fireflies,,Fireflies
+Percentage of timestamps in time,0.936599424,,0.926136364,,0.803234501,,0
+Percentage of timestamps from annotated,0.987841945,,0.990881459,,0.905775076,,0
+Percentage of downbeats/beats correct,0.948126801,,0.934659091,,0,,0
+,,,,,,,
+Madmom,OverMyHead,,OverMyHead,,OverMyHead,,OverMyHead
+Percentage of timestamps in time,0.39380531,,0.090909091,,0.455947137,,0
+Percentage of timestamps from annotated,0.403628118,,0.092970522,,0.469387755,,0
+Percentage of downbeats/beats correct,0,,0.977827051,,0,,0
+,,,,,,,
+Madmom,Solo,,Solo,,Solo,,Solo
+Percentage of timestamps in time,1,,0.068649886,,0.02027027,,0
+Percentage of timestamps from annotated,0.997690531,,0.069284065,,0.020785219,,0
+Percentage of downbeats/beats correct,1,,0,,0,,0

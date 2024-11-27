@@ -1,14 +1,15 @@
 from annotated_intake import *
 from data_intake import *
 import os
+import csv
 
 # get annotated beat txt
 def getAnnotatedBeats(song):
     return beat_intake("ground_truth/Beats_Downbeats/" + song + "_Beats.txt")
 
 # get predicted downbeat csv
-def getDownbeatOutput(algorithmFolder, song):
-    return parse_downbeats_to_tuples("downbeatOutputs/" + algorithmFolder + "/" + song + "_DBOutput.csv")
+def getDownbeatOutput(algorithmFolder, song, fileType):
+    return parse_downbeats_to_tuples("downbeatOutputs/" + algorithmFolder + "/" + song + "_DBOutput" + fileType)
 
 # get where the annotated and predicted beats align at the start
 def getStart(anno_beats, predicted_beats, threshold=0.25):
@@ -38,23 +39,35 @@ def checkBeats(anno_beats, predicted_beats, predicted_start_index, threshold=0.2
 
 
 def evaluateDownBeatTracker():
-    downBeatTrackerLoop("Madmom")
-    downBeatTrackerLoop("BeatNet")
+
+    with open("downBeatEvaluation.csv", mode='w', newline='') as csv_file:
+        csv_writer = csv.writer(csv_file)
+    downBeatTrackerLoop("Madmom", ".csv")
+    downBeatTrackerLoop("BeatNet", ".csv")
+    downBeatTrackerLoop("Bar and Beat Tracker Beats", ".txt")
+    downBeatTrackerLoop("QM Bar and Beat Tracker Bars", ".txt")
 
 
-def downBeatTrackerLoop(folderName):
+def downBeatTrackerLoop(folderName, fileType):
     for song in os.scandir("ground_truth/Beats_Downbeats"):
         songName = song.name.strip().split("_")[0]
-        print(songName)
         anno_beats = getAnnotatedBeats(songName)
-        predicted_beats = getDownbeatOutput(folderName, songName)
+        predicted_beats = getDownbeatOutput(folderName, songName, fileType)
 
         predicted_start_index = getStart(anno_beats, predicted_beats)
         how_many_beats_in_threshold, beatCount = checkBeats(anno_beats, predicted_beats, predicted_start_index)
 
-        print("Percentage of timestamps in time: ", how_many_beats_in_threshold/len(predicted_beats))
-        print("Percentage of timestamps from annotated: ", how_many_beats_in_threshold/len(anno_beats))
-        print("Percentage of downbeats/beats correct: ", beatCount/len(predicted_beats))
+        with open("downBeatEvaluation.csv", mode='a', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            csv_writer.writerow([])
+            csv_writer.writerow([folderName, songName])
+            csv_writer.writerow(["Percentage of timestamps in time", how_many_beats_in_threshold/len(predicted_beats)])
+            csv_writer.writerow(["Percentage of timestamps from annotated", how_many_beats_in_threshold/len(anno_beats)])
+            csv_writer.writerow(["Percentage of downbeats/beats correct", beatCount/len(predicted_beats)])
+
+        # print("Percentage of timestamps in time: ", how_many_beats_in_threshold/len(predicted_beats))
+        # print("Percentage of timestamps from annotated: ", how_many_beats_in_threshold/len(anno_beats))
+        # print("Percentage of downbeats/beats correct: ", beatCount/len(predicted_beats))
 
 
 evaluateDownBeatTracker()
