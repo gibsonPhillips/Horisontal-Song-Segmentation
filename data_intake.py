@@ -82,4 +82,4 @@ def parse_timestamps_to_list(filename):
     return third_items
 
 
-print("wait")
+print("Test it when you have the right branches bro")
