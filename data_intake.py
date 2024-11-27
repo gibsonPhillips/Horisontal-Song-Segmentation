@@ -59,3 +59,27 @@ def parse_downbeats_to_tuples(url):
 
     return downbeats
 
+# Takes a file location for exported label outputs for beat tracking and returns a list of the timestamps
+def parse_timestamps_to_list(filename):
+    third_items = []
+
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                items = line.split()
+                if len(items) == 3:
+
+                    third_items.append(float(items[2]))
+                else:
+                    print("something's wrong, I can feel it")
+    except FileNotFoundError:
+        print(f"Whoopsies: '{filename}' was not found.")
+    except ValueError:
+        print(f"Whoopsies: A line in the file could not be converted to float.")
+    except Exception as e:
+        print(f"Whoopsies: {e}")
+
+    return third_items
+
+
+print("wait")
