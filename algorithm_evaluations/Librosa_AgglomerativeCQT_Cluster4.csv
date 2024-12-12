@@ -14,12 +14,12 @@ Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Neare
 10,188.56925170068027,1,NA,NA,NA,NA,NA,NA,NA
 Averages,,,,0.09517006802720496,,0.534515471655329,,3.408890388888894
 Proximity Scores,,,,0.19034013605440991,,1.069030943310658,,6.817780777777788
-Percent of ground truth boundaries (0.5 sec),0.3
-Percent of ground truth boundaries found (0.5 sec),0.25
-Percent of ground truth boundaries (3 sec),0.7
-Percent of ground truth boundaries found (3 sec),0.5
-Percent of ground truth boundaries (2 beats),0.7
-Percent of ground truth boundaries found (2 beats),0.5
+Percent precision (0.5 sec),0.3
+Percent recall (0.5 sec),0.25
+Percent precision (3 sec),0.7
+Percent recall (3 sec),0.5
+Percent precision (2 beats),0.7
+Percent recall (2 beats),0.5
 Average time between beats,0.5
 Rand Index Score,0.7341727326382058
 
@@ -37,12 +37,12 @@ Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Neare
 10,235.56643990929706,1,NA,NA,NA,NA,NA,NA,NA
 Averages,,,,0.013948154761904474,,0.46496924036281095,,4.125091292517007
 Proximity Scores,,,,0.030636117978722736,,1.021271469050375,,9.06046610951838
-Percent of ground truth boundaries (0.5 sec),0.5
-Percent of ground truth boundaries found (0.5 sec),0.5
-Percent of ground truth boundaries (3 sec),0.7
-Percent of ground truth boundaries found (3 sec),0.7
-Percent of ground truth boundaries (2 beats),0.5
-Percent of ground truth boundaries found (2 beats),0.5
+Percent precision (0.5 sec),0.5
+Percent recall (0.5 sec),0.5
+Percent precision (3 sec),0.7
+Percent recall (3 sec),0.7
+Percent precision (2 beats),0.5
+Percent recall (2 beats),0.5
 Average time between beats,0.4552846666667
 Rand Index Score,0.7679876118611296
 
@@ -65,12 +65,12 @@ Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Neare
 15,209.58331065759637,3,NA,NA,NA,NA,NA,NA,NA
 Averages,,,,0.046709459270889105,,0.5508230695970664,,8.009278133612417
 Proximity Scores,,,,0.10120392962418935,,1.1934511775781547,,17.353453309613545
-Percent of ground truth boundaries (0.5 sec),0.2
-Percent of ground truth boundaries found (0.5 sec),0.3333333333333333
-Percent of ground truth boundaries (3 sec),0.5333333333333333
-Percent of ground truth boundaries found (3 sec),0.7777777777777778
-Percent of ground truth boundaries (2 beats),0.2
-Percent of ground truth boundaries found (2 beats),0.3333333333333333
+Percent precision (0.5 sec),0.2
+Percent recall (0.5 sec),0.3333333333333333
+Percent precision (3 sec),0.5333333333333333
+Percent recall (3 sec),0.7777777777777778
+Percent precision (2 beats),0.2
+Percent recall (2 beats),0.3333333333333333
 Average time between beats,0.461538
 Rand Index Score,0.6165144807231138
 
@@ -86,12 +86,12 @@ Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Neare
 8,212.5554648526077,1,NA,NA,NA,NA,NA,NA,NA
 Averages,,,,0.03257271655329023,,0.44095928647014243,,6.578220281179142
 Proximity Scores,,,,0.06556396449847297,,0.8875845205020224,,13.240965035039377
-Percent of ground truth boundaries (0.5 sec),0.125
-Percent of ground truth boundaries found (0.5 sec),0.09090909090909091
-Percent of ground truth boundaries (3 sec),0.375
-Percent of ground truth boundaries found (3 sec),0.2727272727272727
-Percent of ground truth boundaries (2 beats),0.125
-Percent of ground truth boundaries found (2 beats),0.09090909090909091
+Percent precision (0.5 sec),0.125
+Percent recall (0.5 sec),0.09090909090909091
+Percent precision (3 sec),0.375
+Percent recall (3 sec),0.2727272727272727
+Percent precision (2 beats),0.125
+Percent recall (2 beats),0.09090909090909091
 Average time between beats,0.49680822083369997
 Rand Index Score,0.6145038167938931
 
@@ -110,12 +110,12 @@ Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Neare
 11,220.68244897959184,3,NA,NA,NA,NA,NA,NA,NA
 Averages,,,,0.04641558075081539,,0.4543641310153627,,0.782707600907024
 Proximity Scores,,,,0.06962354518508604,,0.681547900392795,,1.1740643365213772
-Percent of ground truth boundaries (0.5 sec),0.2727272727272727
-Percent of ground truth boundaries found (0.5 sec),0.23076923076923078
-Percent of ground truth boundaries (3 sec),1.0
-Percent of ground truth boundaries found (3 sec),0.6923076923076923
-Percent of ground truth boundaries (2 beats),0.7272727272727273
-Percent of ground truth boundaries found (2 beats),0.5384615384615384
+Percent precision (0.5 sec),0.2727272727272727
+Percent recall (0.5 sec),0.23076923076923078
+Percent precision (3 sec),1.0
+Percent recall (3 sec),0.6923076923076923
+Percent precision (2 beats),0.7272727272727273
+Percent recall (2 beats),0.5384615384615384
 Average time between beats,0.6666650000000001
 Rand Index Score,0.8585051900398328
 
@@ -134,12 +134,12 @@ Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Neare
 11,232.80326530612246,2,NA,NA,NA,NA,NA,NA,NA
 Averages,,,,0.28139475799949565,,0.49215601927437713,,2.8047881812799167
 Proximity Scores,,,,0.5440302644212189,,0.9515023350321749,,5.422594460377111
-Percent of ground truth boundaries (0.5 sec),0.2727272727272727
-Percent of ground truth boundaries found (0.5 sec),0.23076923076923078
-Percent of ground truth boundaries (3 sec),0.8181818181818182
-Percent of ground truth boundaries found (3 sec),0.6923076923076923
-Percent of ground truth boundaries (2 beats),0.45454545454545453
-Percent of ground truth boundaries found (2 beats),0.38461538461538464
+Percent precision (0.5 sec),0.2727272727272727
+Percent recall (0.5 sec),0.23076923076923078
+Percent precision (3 sec),0.8181818181818182
+Percent recall (3 sec),0.6923076923076923
+Percent precision (2 beats),0.45454545454545453
+Percent recall (2 beats),0.38461538461538464
 Average time between beats,0.517241
 Rand Index Score,0.7969539232697127
 
@@ -196,12 +196,12 @@ Boundary,Boundary_Timestamp,Label,Nearest_Beat,Nearest_Beat_Number,Dist_to_Neare
 49,199.04145124716553,1,NA,NA,NA,NA,NA,NA,NA
 Averages,,,,0.04333601274907344,,0.37814673214888894,,6.793622301044527
 Proximity Scores,,,,0.09389478818444731,,0.819318738974665,,14.719529705126181
-Percent of ground truth boundaries (0.5 sec),0.04081632653061224
-Percent of ground truth boundaries found (0.5 sec),0.2222222222222222
-Percent of ground truth boundaries (3 sec),0.32653061224489793
-Percent of ground truth boundaries found (3 sec),1.0
-Percent of ground truth boundaries (2 beats),0.061224489795918366
-Percent of ground truth boundaries found (2 beats),0.3333333333333333
+Percent precision (0.5 sec),0.04081632653061224
+Percent recall (0.5 sec),0.2222222222222222
+Percent precision (3 sec),0.32653061224489793
+Percent recall (3 sec),1.0
+Percent precision (2 beats),0.061224489795918366
+Percent recall (2 beats),0.3333333333333333
 Average time between beats,0.461538
 Rand Index Score,0.6368055817936802
 

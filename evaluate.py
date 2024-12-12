@@ -166,12 +166,12 @@ def write_csv(csv_name, song_name, labels, anno_beats, anno_segments, boundaries
         # anal headers
         csv_writer.writerow(["Averages", "", "", "", nearest_any_beat, "", nearest_downbeats, "", nearest_gt_segments])
         csv_writer.writerow(["Proximity Scores", "", "", "", nearest_any_beat_ps, "", nearest_downbeats_ps, "", nearest_gt_segments_ps])
-        csv_writer.writerow(["Percent of ground truth boundaries (0.5 sec)", gt_boundaries_1])
-        csv_writer.writerow(["Percent of ground truth boundaries found (0.5 sec)", gt_boundaries_found_1])
-        csv_writer.writerow(["Percent of ground truth boundaries (3 sec)", gt_boundaries_2])
-        csv_writer.writerow(["Percent of ground truth boundaries found (3 sec)", gt_boundaries_found_2])
-        csv_writer.writerow(["Percent of ground truth boundaries (2 beats)", gt_boundaries_3])
-        csv_writer.writerow(["Percent of ground truth boundaries found (2 beats)", gt_boundaries_found_3])
+        csv_writer.writerow(["Percent precision (0.5 sec)", gt_boundaries_1])
+        csv_writer.writerow(["Percent recall (0.5 sec)", gt_boundaries_found_1])
+        csv_writer.writerow(["Percent precision (3 sec)", gt_boundaries_2])
+        csv_writer.writerow(["Percent recall (3 sec)", gt_boundaries_found_2])
+        csv_writer.writerow(["Percent precision (2 beats)", gt_boundaries_3])
+        csv_writer.writerow(["Percent recall (2 beats)", gt_boundaries_found_3])
         csv_writer.writerow(["Average time between beats", averageTimeBetweenBeats])
         csv_writer.writerow(["Rand Index Score", rand_index_score])
     return nearest_any_beat, nearest_downbeats, nearest_gt_segments, nearest_any_beat_ps, nearest_downbeats_ps, nearest_gt_segments_ps, gt_boundaries_1, gt_boundaries_found_1, gt_boundaries_2, gt_boundaries_found_2, gt_boundaries_3, gt_boundaries_found_3
@@ -200,14 +200,16 @@ def calculate_final_scores(heuristics):
 
         precision = (normalized_2[i] + normalized_3[i]) / 2
         recall = (normalized_found_2[i] + normalized_found_3[i]) / 2
+        low_tolerance_precision = normalized_1[i]
+        low_tolerance_recall = normalized_found_1[i]
         low_tolerance = (normalized_1[i] + normalized_found_1[i]) / 2
 
         # take the average between ground truth prediction score and rand index
-        final_scores.append([heuristics[i][0], precision, recall, low_tolerance, normalized_rand_index[i], (precision + recall + low_tolerance + normalized_rand_index[i]) / 4])
+        final_scores.append([heuristics[i][0], precision, recall, low_tolerance_precision, low_tolerance_recall, normalized_rand_index[i], (precision + recall + low_tolerance + normalized_rand_index[i]) / 4])
 
     with open("final_algorithm_scores.csv", mode='w', newline='') as csv_file:
         csv_writer = csv.writer(csv_file)
-        header = ['Algorithm Name', 'Precision', 'Recall', 'Low Tolerance', 'Rand Index', 'Overall Score (Average)']
+        header = ['Algorithm Name', 'Precision', 'Recall', 'Low Tolerance Precision', 'Low Tolerance Recall', 'Rand Index', 'Overall Score (Average)']
         csv_writer.writerow(header)
         for row in final_scores:
             csv_writer.writerow(row)
@@ -230,6 +232,8 @@ def create_evaluation_csvs():
         print(folder.name)
         csv_path = "algorithm_evaluations/" + folder.name + ".csv"
 
+
+        # Count and sum variables for calculating averages
         song_count = 0
         rand_index_sum = 0
         nearest_any_beat_sum = 0
@@ -251,7 +255,7 @@ def create_evaluation_csvs():
             csv_writer.writerow([folder.name])
 
 
-
+        #Go through all the songs for each algorithm
         for song in os.scandir(folder.path):
             songNameSubstring = song.name.split("_")[0]
 
